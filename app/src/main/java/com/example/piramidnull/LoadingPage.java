@@ -48,7 +48,7 @@ public class LoadingPage extends AppCompatActivity {
         handler.post(imageSwitcher);
 
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(LoadingPage.this,LoginPage.class);
+            Intent intent = new Intent(LoadingPage.this, LandingPage.class);
             startActivity(intent);
             finish();
         }, 3000);
