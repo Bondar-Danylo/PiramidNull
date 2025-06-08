@@ -8,4 +8,10 @@
     <string name="loginText">Step into the role of Dr. Alan Robwelizer - the piramid`s secrets await.</string>
     <string name="createAccount">Create Account</string>
     <string name="singIn">Sign In</string>
+    <string name="welcomeBack">Welcome Back!</string>
+    <string name="arrowDescription">Back Arrow</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="rememberMe">Remember Me</string>
+    <string name="forgotPassword">Forgot Password?</string>
 </resources>
