@@ -8,4 +8,48 @@
     tools:context=".MainPage"
     android:background="@color/dark_bg">
 
+    <LinearLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/navigation"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_margin="30dp"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/navigation_notes"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/notes"
+            android:contentDescription="@string/notesDescription"/>
+
+        <ImageView
+            android:id="@+id/navigation_profile"
+            android:layout_weight="1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/profile"
+            android:contentDescription="@string/notesDescription"/>
+
+        <ImageView
+            android:id="@+id/navigation_main"
+            android:layout_weight="1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/main"
+            android:contentDescription="@string/mainDescription"/>
+
+        <ImageView
+            android:id="@+id/navigation_bio"
+            android:layout_weight="1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/scroll"
+            android:contentDescription="@string/bioDescription"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
