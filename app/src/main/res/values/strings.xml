@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Piramid Null</string>
+    <string name="loading_description">Image for Loading Page</string>
+    <string name="login_description">Logo</string>
+    <string name="loginTitle1">Piramid Null</string>
+    <string name="loginTitle2">Game Assistant</string>
+    <string name="loginDescription">YOUR GUIDE THROUGH  \nTHE UNKNOWN</string>
+    <string name="loginText">Step into the role of Dr. Alan Robwelizer - the piramid`s secrets await.</string>
+    <string name="createAccount">Create Account</string>
+    <string name="singIn">Sign In</string>
+</resources>
