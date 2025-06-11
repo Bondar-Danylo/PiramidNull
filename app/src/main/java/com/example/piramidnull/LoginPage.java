@@ -2,7 +2,6 @@ package com.example.piramidnull;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -25,11 +24,6 @@ public class LoginPage extends AppCompatActivity {
         });
 
         ImageView backBtn = findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginPage.this, LandingPage.class));
-            }
-        });
+        backBtn.setOnClickListener(view -> startActivity(new Intent(LoginPage.this, LandingPage.class)));
     }
 }

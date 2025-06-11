@@ -2,7 +2,6 @@ package com.example.piramidnull;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -26,11 +25,6 @@ public class LandingPage extends AppCompatActivity {
         });
 
         Button loginBtn = findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LandingPage.this, LoginPage.class));
-            }
-        });
+        loginBtn.setOnClickListener(view -> startActivity(new Intent(LandingPage.this, LoginPage.class)));
     }
 }

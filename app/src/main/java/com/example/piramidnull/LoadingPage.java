@@ -14,15 +14,15 @@ import androidx.core.view.WindowInsetsCompat;
 public class LoadingPage extends AppCompatActivity {
 
     private ImageView imageView;
-    private int[] images = {
+    private final int[] images = {
             R.drawable.loading_1,
             R.drawable.loading_3,
             R.drawable.loading_2,
     };
     private int currentIndex = 0;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
-    private Runnable imageSwitcher = new Runnable() {
+    private final Runnable imageSwitcher = new Runnable() {
         @Override
         public void run() {
             imageView.setImageResource(images[currentIndex]);
