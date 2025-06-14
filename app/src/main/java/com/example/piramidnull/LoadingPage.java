@@ -16,8 +16,12 @@ public class LoadingPage extends AppCompatActivity {
     private ImageView imageView;
     private final int[] images = {
             R.drawable.loading_1,
-            R.drawable.loading_3,
             R.drawable.loading_2,
+            R.drawable.loading_3,
+            R.drawable.loading_4,
+            R.drawable.loading_5,
+            R.drawable.loading_6,
+            R.drawable.loading_7,
     };
     private int currentIndex = 0;
     private final Handler handler = new Handler();
@@ -27,7 +31,7 @@ public class LoadingPage extends AppCompatActivity {
         public void run() {
             imageView.setImageResource(images[currentIndex]);
             currentIndex = (currentIndex + 1) % images.length;
-            handler.postDelayed(this, 1000);
+            handler.postDelayed(this, 600);
         }
     };
 
@@ -51,7 +55,7 @@ public class LoadingPage extends AppCompatActivity {
             Intent intent = new Intent(LoadingPage.this, LandingPage.class);
             startActivity(intent);
             finish();
-        }, 3000);
+        }, 4500);
     }
 
     @Override
