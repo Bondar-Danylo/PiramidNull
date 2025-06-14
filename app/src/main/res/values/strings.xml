@@ -18,4 +18,5 @@
     <string name="profileDescription">Navigation Profile Icon</string>
     <string name="mainDescription">Navigation Main Icon</string>
     <string name="bioDescription">Navigation Biography Icon</string>
+    <string name="createYourAvatar">Create Your Avatar</string>
 </resources>
