@@ -2,6 +2,7 @@ package com.example.piramidnull;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
@@ -11,7 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class LandingPage extends AppCompatActivity {
-    Button loginBtn, registerBtn;
+
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,16 @@ public class LandingPage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        dbHelper = new DatabaseHelper(this);
+
+        // Adding SuperUser for debaging
+        dbHelper.insertUser("admin", "admin",
+                "11.01.2001", 1,
+                "avatar_1.png", "background_1.png");
+
+        Log.d("DB", "User Created");
+
 
         Button loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(view -> startActivity(new Intent(LandingPage.this, LoginPage.class)));
