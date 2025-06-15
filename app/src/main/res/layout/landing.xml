@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="900dp"
         android:background="@color/dark_bg"
         android:orientation="vertical">
 
@@ -24,7 +24,7 @@
                 android:textColor="@color/dark_gold"
                 android:textSize="20sp"
                 android:layout_marginTop="60dp"
-                android:layout_marginEnd="10sp"/>
+                android:layout_marginEnd="10sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,22 +43,29 @@
             android:layout_marginTop="40dp"
             android:contentDescription="@string/login_description"
             android:src="@drawable/logo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_gravity="center"
-            app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <!-- Create account/avatar overlay -->
     <FrameLayout
         android:id="@+id/avatarOverlay"
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:visibility="gone"
-        android:background="@color/dark_bg">
+        android:background="@drawable/stroke_createavatar"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:clickable="false"
+        android:focusable="false">
 
-        <include layout="@layout/createaccount" />
+        <FrameLayout
+            android:id="@+id/overlayContentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:clickable="true"
+            android:focusable="true" />
     </FrameLayout>
-
 </FrameLayout>

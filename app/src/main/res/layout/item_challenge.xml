@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="380dp"
+    android:layout_height="700dp"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp"
+        android:fontFamily="@font/poppins"
+        android:background="@drawable/mainpage_blueframe">
+
+        <TextView
+            android:id="@+id/tvChallengeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHALLENGES"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/sand"
+            android:layout_marginBottom="16dp" />
+
+        <ImageView
+            android:id="@+id/ivChallengeImage"
+            android:layout_width="200dp"
+            android:layout_height="250dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="Challenge image"
+            android:src="@drawable/maze_room" />
+
+        <TextView
+            android:id="@+id/tvChallengeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Maze"
+            android:fontFamily="@font/poppins"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/sand"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btnOpenTool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/main_blue"
+            android:text="OPEN TOOL"
+            android:textColor="@android:color/black"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_semibold" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

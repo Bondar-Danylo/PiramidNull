@@ -8,6 +8,7 @@
     tools:context=".MainPage"
     android:background="@color/dark_bg">
 
+
     <LinearLayout
         android:id="@+id/navigation"
         android:layout_width="match_parent"

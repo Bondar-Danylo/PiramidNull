@@ -20,7 +20,7 @@
     <string name="bioDescription">Navigation Biography Icon</string>
     <string-array name="gender_options">
         <item>Select Type</item>
-        <item>Female</item>
-        <item>Male</item>
+        <item>Male Voice</item>
+        <item>Female Voice</item>
     </string-array>
 </resources>

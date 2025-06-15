@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/avatarOverlay"
+    android:id="@+id/createAccountOverlay"
     android:layout_width="match_parent"
     android:layout_height="720dp"
     android:layout_gravity="bottom"
-    android:background="@drawable/stroke_createavatar"
     android:padding="16dp">
 
     <LinearLayout
@@ -17,12 +16,14 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginBottom="30dp"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
 
             <ImageButton
                 android:id="@+id/back_icon"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:backgroundTint="@android:color/transparent"
                 android:background="@android:color/transparent"
                 android:src="@drawable/arrow_left"
@@ -35,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add your details"
-                android:fontFamily="@font/poppins"
+                android:fontFamily="@font/poppins_semibold"
                 android:textColor="@color/sand"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -46,121 +47,137 @@
                 app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Avatar -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+        <!-- Selected Avatar Display -->
+        <FrameLayout
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:background="@drawable/avatar_strokeoval"
+            android:layout_gravity="center"
+            android:clipToOutline="true"
+            android:outlineProvider="background"
+            android:layout_marginBottom="40dp">
 
-            <FrameLayout
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/avatar_strokeoval"
-                android:clipToOutline="true">
-
-                <ImageView
-                    android:id="@+id/detailAvatarBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
-
-                <ImageView
-                    android:id="@+id/detailAvatarImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerInside" />
-            </FrameLayout>
-        </LinearLayout>
-
-        <!-- Input Fields -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="60dp"
-            android:gravity="center_horizontal">
-
-            <EditText
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/detailAvatarBackground"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"
+                android:outlineProvider="background"
+                app:shapeAppearanceOverlay="@style/CircleImageView" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/detailAvatarImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:scaleType="centerInside"
+                android:clipToOutline="true"
+                android:outlineProvider="background"
+                app:shapeAppearanceOverlay="@style/CircleImageView" />
+        </FrameLayout>
+
+        <!-- Form Fields -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+
+            <!-- Username Field -->
+            <EditText
+                android:id="@+id/username_input"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:hint="Username"
                 android:fontFamily="@font/poppins"
+                android:textColor="@color/sand"
                 android:textColorHint="@color/sand"
-                android:textSize="15sp"
-                android:paddingStart="13dp"
-                android:layout_gravity="center"
-                android:background="@drawable/input"
-                android:layout_marginBottom="20dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:hint="Email"
-                android:fontFamily="@font/poppins"
-                android:textColorHint="@color/sand"
-                android:textSize="15sp"
-                android:paddingStart="13dp"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:background="@drawable/input"
                 android:layout_marginBottom="20dp"
-                android:inputType="textEmailAddress" />
+                android:inputType="text"
+                android:maxLines="1" />
 
+            <!-- Password Field -->
             <EditText
+                android:id="@+id/password_input"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
-                android:hint="Birthday"
+                android:layout_height="50dp"
+                android:hint="Password"
                 android:fontFamily="@font/poppins"
+                android:textColor="@color/sand"
                 android:textColorHint="@color/sand"
-                android:textSize="15sp"
-                android:paddingStart="13dp"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/input"
+                android:layout_marginBottom="20dp"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+
+            <!-- Birthday Field -->
+            <EditText
+                android:id="@+id/birthday_input"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Your birthday"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/sand"
+                android:textColorHint="@color/sand"
+                android:textSize="18sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
                 android:background="@drawable/input"
                 android:layout_marginBottom="20dp"
                 android:focusable="false"
-                android:clickable="true" />
-            </LinearLayout>
-        <!-- Spinner Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Voice Type: "
-                android:fontFamily="@font/poppins"
-                android:textColor="@color/sand"
-                android:textSize="15sp"
-                android:layout_marginBottom="8dp" />
-            <Spinner
-                android:id="@+id/genderSpinner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:popupBackground="@color/light_bg"
                 android:clickable="true"
-                android:fontFamily="@font/poppins"
-                android:spinnerMode="dropdown"
-                android:enabled="true" />
+                android:drawablePadding="12dp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Voice Type"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/sand"
+                    android:textSize="18sp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="12dp"/>
+
+                <Spinner
+                    android:id="@+id/genderSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_unselected"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:gravity="center_vertical"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Create Account Button -->
         <Button
+            android:id="@+id/createaccount_button"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="Create Account"
-            android:textAllCaps="false"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:text="CREATE ACCOUNT"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:background="@drawable/btn_selected"
-            android:textColor="@color/dark_bg"
-            android:textAlignment="center"
-            android:fontFamily="@font/poppins"
-            android:gravity="center_vertical"
-            android:layout_marginTop="40dp" />
-
-    </LinearLayout>
+            android:textStyle="bold"/>
+        </LinearLayout>
 </ScrollView>

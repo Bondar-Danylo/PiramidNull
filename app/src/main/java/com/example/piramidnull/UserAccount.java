@@ -1,15 +1,10 @@
 package com.example.piramidnull;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.*;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -20,15 +15,13 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 public class UserAccount extends AppCompatActivity {
 
+    private FrameLayout avatarOverlay, overlayContentContainer;
     private ShapeableImageView avatarImage;
-    private ImageView avatarBackground;
+    private ImageView avatarBackground, btnPrevious;
     private GridLayout avatarGrid, backgroundGrid;
     private LinearLayout avatarStepLayout, backgroundStepLayout;
     private Button btnCharacter, btnBackground, skipButton;
-    private View avatarOverlay;
-    private ImageView btnPrevious;
-    private ImageButton btnNext;
-    private ImageButton backIcon;
+    private ImageButton btnNext, backIcon;
 
     private final int[] avatarIds = {
             R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3,
@@ -40,10 +33,13 @@ public class UserAccount extends AppCompatActivity {
             R.drawable.background_4, R.drawable.background_5, R.drawable.background_6
     };
 
-    private int selectedAvatarResId = R.drawable.avatar_1;
+    private int selectedAvatarResId = R.drawable.avatar_4;
     private int selectedBackgroundResId = R.drawable.background_1;
-
     private boolean isAvatarStep = true;
+
+    // Track selected buttons for visual feedback
+    private ImageButton selectedAvatarButton = null;
+    private ImageButton selectedBackgroundButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,45 +47,72 @@ public class UserAccount extends AppCompatActivity {
         setContentView(R.layout.landing);
 
         avatarOverlay = findViewById(R.id.avatarOverlay);
-        if (avatarOverlay != null) {
-            ViewCompat.setOnApplyWindowInsetsListener(avatarOverlay, (v, insets) -> {
-                Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-                return insets;
-            });
-        }
+        overlayContentContainer = findViewById(R.id.overlayContentContainer);
 
-        initViews();
-        setupListeners();
-        loadGridItems(avatarGrid, avatarIds, true);
-        loadGridItems(backgroundGrid, backgroundIds, false);
-        showStep(true);
+        ViewCompat.setOnApplyWindowInsetsListener(avatarOverlay, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        inflateOverlayContent(R.layout.createaccount);
         showOverlayWithDelay();
     }
 
-    private void initViews() {
-        avatarImage = findViewById(R.id.avatarImage);
-        avatarBackground = findViewById(R.id.avatarBackground);
+    private void inflateOverlayContent(int layoutResId) {
+        overlayContentContainer.removeAllViews();
+        View inflatedView = getLayoutInflater().inflate(layoutResId, overlayContentContainer, false);
+        overlayContentContainer.addView(inflatedView);
 
-        // Set default avatar and background when activity loads
-        selectedAvatarResId = R.drawable.avatar_4;
-
-        avatarImage.setImageResource(selectedAvatarResId);
-
-
-        avatarGrid = findViewById(R.id.avatarGrid);
-        backgroundGrid = findViewById(R.id.backgroundGrid);
-        avatarStepLayout = findViewById(R.id.avatarStepLayout);
-        backgroundStepLayout = findViewById(R.id.backgroundStepLayout);
-        btnCharacter = findViewById(R.id.btn_character);
-        btnBackground = findViewById(R.id.btn_background);
-        skipButton = findViewById(R.id.btn_skip);
-        btnPrevious = findViewById(R.id.btn_previous);
-        btnNext = findViewById(R.id.btn_next);
-        backIcon = findViewById(R.id.back_icon);
+        if (layoutResId == R.layout.createaccount) {
+            bindCreateAccountViews(inflatedView);
+            setupCreateAccountListeners();
+            loadGridItems(avatarGrid, avatarIds, true);
+            loadGridItems(backgroundGrid, backgroundIds, false);
+            showStep(isAvatarStep);  // Restore to correct step (avatar/background)
+        } else if (layoutResId == R.layout.createaccount_details) {
+            bindDetailsViews(inflatedView);
+            setupBackIconForDetails(inflatedView);
+        }
     }
 
-    private void setupListeners() {
+    private void bindCreateAccountViews(View root) {
+        avatarImage = root.findViewById(R.id.avatarImage);
+        avatarBackground = root.findViewById(R.id.avatarBackground);
+        avatarGrid = root.findViewById(R.id.avatarGrid);
+        backgroundGrid = root.findViewById(R.id.backgroundGrid);
+        avatarStepLayout = root.findViewById(R.id.avatarStepLayout);
+        backgroundStepLayout = root.findViewById(R.id.backgroundStepLayout);
+        btnCharacter = root.findViewById(R.id.btn_character);
+        btnBackground = root.findViewById(R.id.btn_background);
+        skipButton = root.findViewById(R.id.btn_skip);
+        btnPrevious = root.findViewById(R.id.btn_previous);
+        btnNext = root.findViewById(R.id.btn_next);
+        backIcon = root.findViewById(R.id.back_icon);
+        avatarImage.setImageResource(selectedAvatarResId);
+        avatarBackground.setImageResource(selectedBackgroundResId);
+    }
+
+    private void bindDetailsViews(View root) {
+        ImageView detailAvatarBackground = root.findViewById(R.id.detailAvatarBackground);
+        ImageView detailAvatarImage = root.findViewById(R.id.detailAvatarImage);
+
+        detailAvatarBackground.setImageResource(selectedBackgroundResId);
+        detailAvatarImage.setImageResource(selectedAvatarResId);
+    }
+
+    // NEW: Back button inside details screen
+    private void setupBackIconForDetails(View root) {
+        ImageButton detailsBackIcon = root.findViewById(R.id.back_icon);
+        if (detailsBackIcon != null) {
+            detailsBackIcon.setOnClickListener(v -> {
+                isAvatarStep = false; // Go back to background selection
+                inflateOverlayContent(R.layout.createaccount);
+            });
+        }
+    }
+
+    private void setupCreateAccountListeners() {
         btnCharacter.setOnClickListener(v -> {
             isAvatarStep = true;
             showStep(true);
@@ -102,47 +125,35 @@ public class UserAccount extends AppCompatActivity {
 
         btnNext.setOnClickListener(v -> {
             if (isAvatarStep) {
-                // Move from avatar to background step
                 isAvatarStep = false;
                 showStep(false);
-            } else {startActivity(new Intent(UserAccount.this, CreateAccountDetails.class));
+            } else {
+                inflateOverlayContent(R.layout.createaccount_details);
             }
         });
+
         btnPrevious.setOnClickListener(v -> {
             isAvatarStep = true;
             showStep(true);
         });
-        backIcon.setOnClickListener(v -> {
-            finish();
+
+        backIcon.setOnClickListener(v -> finish());
+
+        skipButton.setOnClickListener(v -> {
+            inflateOverlayContent(R.layout.createaccount_details);
         });
 
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(UserAccount.this, CreateAccountDetails.class));
-            }
-        });
-
-        if (avatarOverlay != null) {
-            avatarOverlay.setOnClickListener(v -> avatarOverlay.setVisibility(View.GONE));
-        }
-    }
-
-    private void goToDetailsActivity() {
-        Intent intent = new Intent(UserAccount.this, CreateAccountDetails.class);
-        intent.putExtra("SELECTED_AVATAR", selectedAvatarResId);
-        intent.putExtra("SELECTED_BACKGROUND", selectedBackgroundResId);
-        startActivity(intent);
+        avatarOverlay.setOnClickListener(v -> avatarOverlay.setVisibility(View.GONE));
     }
 
     private void showOverlayWithDelay() {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (avatarOverlay != null && !isFinishing()) {
+            if (!isFinishing()) {
                 avatarOverlay.setVisibility(View.VISIBLE);
                 avatarOverlay.setAlpha(0f);
                 avatarOverlay.animate().alpha(1f).setDuration(300).start();
             }
-        }, 2500);
+        }, 1500);
     }
 
     private void showStep(boolean isCharacterStep) {
@@ -156,7 +167,6 @@ public class UserAccount extends AppCompatActivity {
 
     private void loadGridItems(GridLayout grid, int[] drawableIds, boolean isAvatarGrid) {
         if (grid == null) return;
-
         grid.removeAllViews();
 
         for (int drawableId : drawableIds) {
@@ -171,13 +181,38 @@ public class UserAccount extends AppCompatActivity {
             params.setMargins(16, 16, 16, 16);
             imgButton.setLayoutParams(params);
 
+            // This shows the blue frame when selected
+            if (isAvatarGrid && drawableId == selectedAvatarResId) {
+                imgButton.setBackgroundResource(R.drawable.selected_frame);  // ← BLUE FRAME APPLIED HERE
+                selectedAvatarButton = imgButton;
+            } else if (!isAvatarGrid && drawableId == selectedBackgroundResId) {
+                imgButton.setBackgroundResource(R.drawable.selected_frame);  // ← BLUE FRAME APPLIED HERE
+                selectedBackgroundButton = imgButton;
+            }
+
             imgButton.setOnClickListener(v -> {
                 if (isAvatarGrid) {
+                    // Remove selection from previous avatar button
+                    if (selectedAvatarButton != null) {
+                        selectedAvatarButton.setBackgroundResource(R.drawable.square_avatar);  // ← BLUE FRAME REMOVED HERE
+                    }
+
+                    // Set new selection
+                    imgButton.setBackgroundResource(R.drawable.selected_frame);  // ← BLUE FRAME APPLIED HERE
+                    selectedAvatarButton = imgButton;
+
                     avatarImage.setImageResource(drawableId);
                     selectedAvatarResId = drawableId;
                 } else {
+                    // Remove selection from previous background button
+                    if (selectedBackgroundButton != null) {
+                        selectedBackgroundButton.setBackgroundResource(R.drawable.square_avatar);  // ← BLUE FRAME REMOVED
+                    }
+
+                    imgButton.setBackgroundResource(R.drawable.selected_frame);  // ← BLUE FRAME
+                    selectedBackgroundButton = imgButton;
+
                     avatarBackground.setImageResource(drawableId);
-                    avatarImage.setBackgroundResource(drawableId);
                     selectedBackgroundResId = drawableId;
                 }
             });
