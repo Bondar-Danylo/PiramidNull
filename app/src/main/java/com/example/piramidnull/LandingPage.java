@@ -25,6 +25,13 @@ public class LandingPage extends AppCompatActivity {
             return insets;
         });
 
+        Button registerBtn = findViewById(R.id.registrationBtn);
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LandingPage.this, UserAccount.class));
+            }
+        });
         Button loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

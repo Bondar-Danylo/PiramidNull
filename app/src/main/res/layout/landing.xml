@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_bg"
+        android:orientation="vertical">
+
+        <!-- Top title bar -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pyramid Null"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/dark_gold"
+                android:textSize="20sp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="10sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Game Assistant"
+                android:textColor="@color/sand"
+                android:textSize="20sp"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/poppins" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/loginImage"
+            android:layout_width="230dp"
+            android:layout_height="236dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/login_description"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/loginTitle" />
+    </LinearLayout>
+
+    <!-- Create account/avatar overlay -->
+    <FrameLayout
+        android:id="@+id/avatarOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:background="@color/dark_bg">
+
+        <include layout="@layout/createaccount" />
+    </FrameLayout>
+
+</FrameLayout>

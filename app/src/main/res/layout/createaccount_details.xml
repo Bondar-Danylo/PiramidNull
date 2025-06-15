@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/avatarOverlay"
+    android:layout_width="match_parent"
+    android:layout_height="720dp"
+    android:layout_gravity="bottom"
+    android:background="@drawable/stroke_createavatar"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <ImageButton
+                android:id="@+id/back_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:backgroundTint="@android:color/transparent"
+                android:background="@android:color/transparent"
+                android:src="@drawable/arrow_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add your details"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/sand"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Avatar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <FrameLayout
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/avatar_strokeoval"
+                android:clipToOutline="true">
+
+                <ImageView
+                    android:id="@+id/detailAvatarBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <ImageView
+                    android:id="@+id/detailAvatarImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <!-- Input Fields -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="60dp"
+            android:gravity="center_horizontal">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:hint="Username"
+                android:fontFamily="@font/poppins"
+                android:textColorHint="@color/sand"
+                android:textSize="15sp"
+                android:paddingStart="13dp"
+                android:layout_gravity="center"
+                android:background="@drawable/input"
+                android:layout_marginBottom="20dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:hint="Email"
+                android:fontFamily="@font/poppins"
+                android:textColorHint="@color/sand"
+                android:textSize="15sp"
+                android:paddingStart="13dp"
+                android:background="@drawable/input"
+                android:layout_marginBottom="20dp"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:hint="Birthday"
+                android:fontFamily="@font/poppins"
+                android:textColorHint="@color/sand"
+                android:textSize="15sp"
+                android:paddingStart="13dp"
+                android:background="@drawable/input"
+                android:layout_marginBottom="20dp"
+                android:focusable="false"
+                android:clickable="true" />
+            </LinearLayout>
+        <!-- Spinner Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voice Type: "
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/sand"
+                android:textSize="15sp"
+                android:layout_marginBottom="8dp" />
+            <Spinner
+                android:id="@+id/genderSpinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:popupBackground="@color/light_bg"
+                android:clickable="true"
+                android:fontFamily="@font/poppins"
+                android:spinnerMode="dropdown"
+                android:enabled="true" />
+
+        </LinearLayout>
+
+        <!-- Create Account Button -->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Create Account"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:background="@drawable/btn_selected"
+            android:textColor="@color/dark_bg"
+            android:textAlignment="center"
+            android:fontFamily="@font/poppins"
+            android:gravity="center_vertical"
+            android:layout_marginTop="40dp" />
+
+    </LinearLayout>
+</ScrollView>

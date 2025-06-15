@@ -1,9 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.PiramidNull" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Override Material3 default colors -->
+        <item name="colorPrimary">@color/sand</item> <!-- your sand color -->
+        <item name="colorPrimaryContainer">@color/dark_gold</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <!-- Override button style -->
+        <item name="materialButtonStyle">@style/CustomMaterialButton</item>
     </style>
 
     <style name="Theme.PiramidNull" parent="Base.Theme.PiramidNull" />
+
+    <!-- Custom button style -->
+    <style name="CustomMaterialButton" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/btn_selected</item>
+        <item name="backgroundTint">@null</item> <!-- important to disable default tint -->
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

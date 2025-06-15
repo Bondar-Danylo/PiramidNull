@@ -22,6 +22,12 @@
             android:name=".LandingPage"
             android:exported="false" />
         <activity
+            android:name=".UserAccount"
+            android:exported="false" />
+        <activity
+            android:name=".CreateAccountDetails"
+            android:exported="false" />
+        <activity
             android:name=".LoadingPage"
             android:exported="true">
             <intent-filter>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Shape with full stroke and rounded top corners -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_bg" />
+            <corners
+                android:topLeftRadius="20dp"
+                android:topRightRadius="20dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+            <stroke android:color="@color/sand" android:width="3dp" />
+        </shape>
+    </item>
+
+    <!-- Overlay to hide the stroke on bottom and sides -->
+    <item android:top="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/light_bg" />
+            <corners android:radius="20dp"></corners>
+        </shape>
+    </item>
+
+</layer-list>
