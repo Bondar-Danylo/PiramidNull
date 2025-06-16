@@ -18,9 +18,9 @@
     <string name="profileDescription">Navigation Profile Icon</string>
     <string name="mainDescription">Navigation Main Icon</string>
     <string name="bioDescription">Navigation Biography Icon</string>
-    <string-array name="gender_options">
-        <item>Select Type</item>
-        <item>Male Voice</item>
-        <item>Female Voice</item>
+    <string-array name="voice_types">
+        <item>Select Type </item>
+        <item>Female</item>
+        <item>Male</item>
     </string-array>
 </resources>

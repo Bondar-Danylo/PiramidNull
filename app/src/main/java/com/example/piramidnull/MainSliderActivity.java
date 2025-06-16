@@ -17,7 +17,7 @@ public class MainSliderActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_slider); // or your layout name
+        setContentView(R.layout.main_slider);
 
         viewPager = findViewById(R.id.viewPager);
 
@@ -27,7 +27,6 @@ public class MainSliderActivity extends AppCompatActivity {
         challengeList.add(new Challenge("CHALLENGES", "Laser Room", R.drawable.laser_room, "DODGE LASERS", 3));
 
         adapter = new ChallengeAdapter(challengeList, challenge -> {
-            // Handle navigation based on challenge.getDestinationId()
             switch (challenge.getDestinationId()) {
                 case 1:
                     startActivity(new Intent(MainSliderActivity.this, UserAccount.class));
