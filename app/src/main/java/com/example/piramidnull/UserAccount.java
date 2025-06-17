@@ -97,7 +97,6 @@ public class UserAccount extends AppCompatActivity {
         btnPrevious = root.findViewById(R.id.btn_previous);
         btnNext = root.findViewById(R.id.btn_next);
         backIcon = root.findViewById(R.id.back_icon);
-
         avatarImage.setImageResource(selectedAvatarResId);
         avatarBackground.setImageResource(selectedBackgroundResId);
     }
@@ -105,7 +104,6 @@ public class UserAccount extends AppCompatActivity {
     private void bindDetailsViews(View root) {
         ImageView detailAvatarBackground = root.findViewById(R.id.detailAvatarBackground);
         ImageView detailAvatarImage = root.findViewById(R.id.detailAvatarImage);
-
         detailAvatarBackground.setImageResource(selectedBackgroundResId);
         detailAvatarImage.setImageResource(selectedAvatarResId);
     }
@@ -119,6 +117,8 @@ public class UserAccount extends AppCompatActivity {
             });
         }
     }
+
+    // Custom Spinner Adapter
     public class CustomSpinnerAdapter extends ArrayAdapter<String> {
         private final Context context;
         private final String[] values;
@@ -138,32 +138,31 @@ public class UserAccount extends AppCompatActivity {
 
         @Override
         public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return createCustomView(position, convertView, parent, R.layout.spinner_dropdown_item);
+            return createCustomView(position, convertView, parent, R.layout.spinner_item);
         }
 
         private View createCustomView(int position, View convertView, ViewGroup parent, int layoutId) {
             View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
-            TextView text = view.findViewById(R.id.item_text);
-            ImageView icon = view.findViewById(R.id.item_icon);
+            TextView text = view.findViewById(R.id.spinnerText);
+            ImageView icon = view.findViewById(R.id.spinnerIcon);
 
             text.setText(values[position]);
             icon.setImageResource(icons[position]);
-
             return view;
         }
     }
-    //Spinner item from details
+
     private void setupDetailsListeners(View root) {
         // Spinner for voice types
         Spinner genderSpinner = root.findViewById(R.id.genderSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.voice_types,
-                R.layout.spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        genderSpinner.setAdapter(adapter);
 
+        // Array of values for voice types
+        String[] voiceTypes = getResources().getStringArray(R.array.voice_types);
+        int[] voiceTypeIcons = { R.drawable.ic_arrow_down, R.drawable.ic_female, R.drawable.ic_male };
 
+        // Create and set the custom spinner adapter
+        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(this, voiceTypes, voiceTypeIcons);
+        genderSpinner.setAdapter(customAdapter);
 
         // Button Create Account to launch next activity with data
         Button createAccount = root.findViewById(R.id.createaccount_button);
@@ -175,7 +174,7 @@ public class UserAccount extends AppCompatActivity {
             String mail = email.getText().toString().trim();
             String voice = genderSpinner.getSelectedItem().toString();
 
-            if(user.isEmpty() || mail.isEmpty()){
+            if (user.isEmpty() || mail.isEmpty()) {
                 Toast.makeText(UserAccount.this, "Please enter username and email", Toast.LENGTH_SHORT).show();
                 return;
             }

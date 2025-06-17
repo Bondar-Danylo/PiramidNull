@@ -156,11 +156,11 @@
                 android:layout_marginBottom="20dp">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Voice Type:"
                     android:textSize="18sp"
+                    android:paddingEnd="51dp"
                     android:textColor="@color/sand"
                     android:fontFamily="@font/poppins" />
 
@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_unselected"
+                    android:background="@drawable/spinner_dropdownbackground"
                     android:paddingStart="10sp"/>
             </LinearLayout>
 

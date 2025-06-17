@@ -48,13 +48,12 @@ public class CreateAccountDetails extends AppCompatActivity {
             }
 
             // Pass the data to MainSliderActivity via Intent
-            Intent intent = new Intent(CreateAccountDetails.this, MainSliderActivity.class);
+            Intent intent = new Intent(this, MainSliderActivity.class);
             intent.putExtra("USERNAME", username);
             intent.putExtra("EMAIL", email);
             intent.putExtra("VOICE_TYPE", voice);
             startActivity(intent);
 
-            // Optional: Finish current activity so the user cannot go back to it
             finish();
         });
     }
