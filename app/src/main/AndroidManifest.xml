@@ -13,14 +13,10 @@
         android:theme="@style/Theme.PiramidNull"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".MainSliderActivity"
             android:exported="false" />
         <activity
             android:name=".Main"
-=======
-            android:name=".FragmentExample"
->>>>>>> DanyloBranch
             android:exported="false" />
         <activity
             android:name=".MainPage"
