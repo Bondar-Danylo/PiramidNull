@@ -19,4 +19,6 @@
     <string name="mainDescription">Navigation Main Icon</string>
     <string name="bioDescription">Navigation Biography Icon</string>
     <string name="createYourAvatar">Create Your Avatar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

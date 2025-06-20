@@ -33,7 +33,7 @@ public class LandingPage extends AppCompatActivity {
                 "11.01.2001", 1,
                 "avatar_1.png", "background_1.png");
 
-        Log.d("DB", "User Created");
+//        Log.d("DB", "User Created");
 
 
         Button loginBtn = findViewById(R.id.loginBtn);
