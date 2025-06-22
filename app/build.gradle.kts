@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation("com.amazonaws:aws-android-sdk-core:2.73.0")
+    implementation("com.amazonaws:aws-android-sdk-polly:2.73.0")
 
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -40,4 +42,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

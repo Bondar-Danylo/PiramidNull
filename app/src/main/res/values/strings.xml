@@ -19,8 +19,8 @@
     <string name="mainDescription">Navigation Main Icon</string>
     <string name="bioDescription">Navigation Biography Icon</string>
     <string-array name="voice_types">
-        <item>Select Type </item>
-        <item>Female</item>
-        <item>Male</item>
+        <item>Select Type</item>
+        <item>Cleopatra</item>
+        <item>Pharaoh</item>
     </string-array>
 </resources>

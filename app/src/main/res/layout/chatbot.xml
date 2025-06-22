@@ -1,0 +1,92 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#80000000">
+
+    <!-- Main Dialog Container -->
+    <RelativeLayout
+        android:id="@+id/dialogContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginHorizontal="24dp">
+
+        <!-- Speech Bubble Container -->
+        <RelativeLayout
+            android:id="@+id/speechBubbleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Speech Bubble Background -->
+            <LinearLayout
+                android:id="@+id/speechBubble"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/speech_bubble_tail"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+                <!-- Chat Text -->
+                <TextView
+                    android:id="@+id/chatText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins_medium"
+                    android:lineSpacingExtra="1dp"
+                    android:layout_marginTop="35dp"
+                    android:padding="4dp"
+                    android:clipToOutline="true"
+                    android:text="Hi there! I'm your Game Guide Bot. I'm here to help you learn how to play and give you tips for each room..."
+                    android:textColor="@color/sand"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/continueButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="94dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:text="Continue ▶"
+                    android:textColor="@color/sand"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/botAvatar"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/circle_button_bg"
+            android:backgroundTint="#D4AF37"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:visibility="gone"
+            android:src="@drawable/guidebot"
+            android:contentDescription="Game Guide Bot" />
+
+        <ImageView
+            android:id="@+id/closeButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_below="@id/speechBubbleContainer"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_button_bg"
+            android:clickable="true"
+            android:contentDescription="Close"
+            android:elevation="4dp"
+            android:focusable="true"
+            android:padding="12dp"
+            android:src="@drawable/ic_close" />
+    </RelativeLayout>
+
+</RelativeLayout>

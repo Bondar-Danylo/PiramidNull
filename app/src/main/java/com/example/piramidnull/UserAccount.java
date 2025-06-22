@@ -1,12 +1,12 @@
 package com.example.piramidnull;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -46,11 +46,19 @@ public class UserAccount extends AppCompatActivity {
     private ImageButton selectedBackgroundButton = null;
 
     private static final String TAG = "UserAccount";
+    private VoiceManager voiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing);
+
+        voiceManager = VoiceManager.getInstance(this);
+
+        if (!voiceManager.isInitialized()) {
+            Log.e(TAG, "VoiceManager failed to initialize - TTS features may not work");
+            Toast.makeText(this, "Voice features may not be available", Toast.LENGTH_SHORT).show();
+        }
 
         avatarOverlay = findViewById(R.id.avatarOverlay);
         overlayContentContainer = avatarOverlay.findViewById(R.id.overlayContentContainer);
@@ -62,12 +70,10 @@ public class UserAccount extends AppCompatActivity {
         });
 
         inflateOverlayContent(R.layout.createaccount);
-        showOverlayWithDelay();
     }
 
     private void inflateOverlayContent(int layoutResId) {
         overlayContentContainer.removeAllViews();
-
         View inflatedView = getLayoutInflater().inflate(layoutResId, overlayContentContainer, false);
         overlayContentContainer.addView(inflatedView);
 
@@ -77,10 +83,10 @@ public class UserAccount extends AppCompatActivity {
             loadGridItems(avatarGrid, avatarIds, true);
             loadGridItems(backgroundGrid, backgroundIds, false);
             showStep(isAvatarStep);
-        } else if (layoutResId == R.layout.createaccount_details) {
+        } else if (layoutResId == R.layout.fragment_create_account) {
             bindDetailsViews(inflatedView);
-            setupDetailsListeners(inflatedView);
             setupBackIconForDetails(inflatedView);
+            avatarOverlay.setVisibility(View.VISIBLE);
         }
     }
 
@@ -97,6 +103,7 @@ public class UserAccount extends AppCompatActivity {
         btnPrevious = root.findViewById(R.id.btn_previous);
         btnNext = root.findViewById(R.id.btn_next);
         backIcon = root.findViewById(R.id.back_icon);
+
         avatarImage.setImageResource(selectedAvatarResId);
         avatarBackground.setImageResource(selectedBackgroundResId);
     }
@@ -104,88 +111,64 @@ public class UserAccount extends AppCompatActivity {
     private void bindDetailsViews(View root) {
         ImageView detailAvatarBackground = root.findViewById(R.id.detailAvatarBackground);
         ImageView detailAvatarImage = root.findViewById(R.id.detailAvatarImage);
-        detailAvatarBackground.setImageResource(selectedBackgroundResId);
-        detailAvatarImage.setImageResource(selectedAvatarResId);
+
+        if (detailAvatarBackground != null)
+            detailAvatarBackground.setImageResource(selectedBackgroundResId);
+        if (detailAvatarImage != null)
+            detailAvatarImage.setImageResource(selectedAvatarResId);
+
+        setupVoiceSpinner(root);
+        setupCreateAccountButton(root);
+    }
+
+    private void setupVoiceSpinner(View root) {
+        Spinner genderSpinner = root.findViewById(R.id.genderSpinner);
+        String[] voiceLabels = getResources().getStringArray(R.array.voice_types);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, voiceLabels);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        genderSpinner.setAdapter(adapter);
+
+        String currentVoice = voiceManager.getCurrentVoiceType();
+        genderSpinner.setSelection("Arthur".equals(currentVoice) ? 2 : 1);
+
+        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                if (pos == 0) return;
+                String label = (String) parent.getItemAtPosition(pos);
+                String voiceId = label.equals("Pharaoh") ? "Arthur" : "Emma";
+                voiceManager.setVoice(voiceId);
+                voiceManager.speak("Hello! I am " + label + ", your voice assistant.");
+            }
+
+            @Override public void onNothingSelected(AdapterView<?> parent) {}
+        });
+    }
+
+    private void setupCreateAccountButton(View root) {
+        Button createAccountButton = root.findViewById(R.id.createaccount_button);
+        createAccountButton.setOnClickListener(v -> {
+            String username = ((EditText) root.findViewById(R.id.username_input)).getText().toString().trim();
+            String password = ((EditText) root.findViewById(R.id.password_input)).getText().toString().trim();
+            String email = ((EditText) root.findViewById(R.id.email_input)).getText().toString().trim();
+
+            if (validateInputs(username, password, email)) {
+                saveUserAccount(username, password, email);
+                Toast.makeText(this, "Your account created successfully!", Toast.LENGTH_SHORT).show();
+                voiceManager.speak("Welcome " + username + "! Your account has been created successfully.");
+            }
+        });
     }
 
     private void setupBackIconForDetails(View root) {
         ImageButton detailsBackIcon = root.findViewById(R.id.back_icon);
         if (detailsBackIcon != null) {
             detailsBackIcon.setOnClickListener(v -> {
+                stopVoice();
                 isAvatarStep = false;
                 inflateOverlayContent(R.layout.createaccount);
             });
         }
-    }
-
-    // Custom Spinner Adapter
-    public class CustomSpinnerAdapter extends ArrayAdapter<String> {
-        private final Context context;
-        private final String[] values;
-        private final int[] icons;
-
-        public CustomSpinnerAdapter(Context context, String[] values, int[] icons) {
-            super(context, R.layout.spinner_item, values);
-            this.context = context;
-            this.values = values;
-            this.icons = icons;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            return createCustomView(position, convertView, parent, R.layout.spinner_item);
-        }
-
-        @Override
-        public View getDropDownView(int position, View convertView, ViewGroup parent) {
-            return createCustomView(position, convertView, parent, R.layout.spinner_item);
-        }
-
-        private View createCustomView(int position, View convertView, ViewGroup parent, int layoutId) {
-            View view = LayoutInflater.from(context).inflate(layoutId, parent, false);
-            TextView text = view.findViewById(R.id.spinnerText);
-            ImageView icon = view.findViewById(R.id.spinnerIcon);
-
-            text.setText(values[position]);
-            icon.setImageResource(icons[position]);
-            return view;
-        }
-    }
-
-    private void setupDetailsListeners(View root) {
-        // Spinner for voice types
-        Spinner genderSpinner = root.findViewById(R.id.genderSpinner);
-
-        // Array of values for voice types
-        String[] voiceTypes = getResources().getStringArray(R.array.voice_types);
-        int[] voiceTypeIcons = { R.drawable.ic_arrow_down, R.drawable.ic_female, R.drawable.ic_male };
-
-        // Create and set the custom spinner adapter
-        CustomSpinnerAdapter customAdapter = new CustomSpinnerAdapter(this, voiceTypes, voiceTypeIcons);
-        genderSpinner.setAdapter(customAdapter);
-
-        // Button Create Account to launch next activity with data
-        Button createAccount = root.findViewById(R.id.createaccount_button);
-        EditText username = root.findViewById(R.id.username_input);
-        EditText email = root.findViewById(R.id.email_input);
-
-        createAccount.setOnClickListener(v -> {
-            String user = username.getText().toString().trim();
-            String mail = email.getText().toString().trim();
-            String voice = genderSpinner.getSelectedItem().toString();
-
-            if (user.isEmpty() || mail.isEmpty()) {
-                Toast.makeText(UserAccount.this, "Please enter username and email", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            Intent intent = new Intent(UserAccount.this, MainSliderActivity.class);
-            intent.putExtra("USERNAME", user);
-            intent.putExtra("EMAIL", mail);
-            intent.putExtra("VOICE_TYPE", voice);
-            startActivity(intent);
-            finish();
-        });
     }
 
     private void setupCreateAccountListeners() {
@@ -204,7 +187,7 @@ public class UserAccount extends AppCompatActivity {
                 isAvatarStep = false;
                 showStep(false);
             } else {
-                inflateOverlayContent(R.layout.createaccount_details);
+                navigateToDetails();
             }
         });
 
@@ -213,39 +196,49 @@ public class UserAccount extends AppCompatActivity {
             showStep(true);
         });
 
-        backIcon.setOnClickListener(v -> finish());
+        backIcon.setOnClickListener(v -> {
+            stopVoice();
+            finish();
+        });
 
-        skipButton.setOnClickListener(v -> inflateOverlayContent(R.layout.createaccount_details));
+        skipButton.setOnClickListener(v -> navigateToDetails());
 
-        avatarOverlay.setOnClickListener(v -> avatarOverlay.setVisibility(View.GONE));
+        avatarOverlay.setOnClickListener(v -> {
+            stopVoice();
+            avatarOverlay.setVisibility(View.GONE);
+        });
     }
 
-    private void showOverlayWithDelay() {
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (!isFinishing()) {
-                avatarOverlay.setVisibility(View.VISIBLE);
-                avatarOverlay.setAlpha(0f);
-                avatarOverlay.animate().alpha(1f).setDuration(300).start();
-            }
-        }, 1500);
-    }
+    private void navigateToDetails() {
+        avatarOverlay.setVisibility(View.GONE);
+        CreateAccountFragment fragment = new CreateAccountFragment();
 
+        Bundle bundle = new Bundle();
+        bundle.putInt("selected_avatar", selectedAvatarResId);
+        bundle.putInt("selected_background", selectedBackgroundResId);
+        bundle.putString("voice_type", voiceManager.getCurrentVoiceType());
+        fragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.DetailsFragment, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
     private void showStep(boolean isCharacterStep) {
         avatarStepLayout.setVisibility(isCharacterStep ? View.VISIBLE : View.GONE);
         backgroundStepLayout.setVisibility(isCharacterStep ? View.GONE : View.VISIBLE);
 
         btnCharacter.setBackgroundResource(isCharacterStep ? R.drawable.btn_selected : R.drawable.btn_unselected);
         btnBackground.setBackgroundResource(!isCharacterStep ? R.drawable.btn_selected : R.drawable.btn_unselected);
+        btnCharacter.setTextColor(getResources().getColor(isCharacterStep ? R.color.black : R.color.sand));
+        btnBackground.setTextColor(getResources().getColor(!isCharacterStep ? R.color.black : R.color.sand));
 
         skipButton.setVisibility(isCharacterStep ? View.VISIBLE : View.GONE);
         btnPrevious.setVisibility(!isCharacterStep ? View.VISIBLE : View.GONE);
     }
 
     private void loadGridItems(GridLayout grid, int[] drawableIds, boolean isAvatarGrid) {
-        if (grid == null) {
-            Log.w(TAG, "GridLayout is null, skipping loadGridItems");
-            return;
-        }
+        if (grid == null) return;
         grid.removeAllViews();
 
         for (int drawableId : drawableIds) {
@@ -270,27 +263,124 @@ public class UserAccount extends AppCompatActivity {
 
             imgButton.setOnClickListener(v -> {
                 if (isAvatarGrid) {
-                    if (selectedAvatarButton != null) {
-                        selectedAvatarButton.setBackgroundResource(R.drawable.square_avatar);
-                    }
-                    imgButton.setBackgroundResource(R.drawable.selected_frame);
-                    selectedAvatarButton = imgButton;
-
-                    avatarImage.setImageResource(drawableId);
-                    selectedAvatarResId = drawableId;
+                    updateSelection(imgButton, true, drawableId);
                 } else {
-                    if (selectedBackgroundButton != null) {
-                        selectedBackgroundButton.setBackgroundResource(R.drawable.square_avatar);
-                    }
-                    imgButton.setBackgroundResource(R.drawable.selected_frame);
-                    selectedBackgroundButton = imgButton;
-
-                    avatarBackground.setImageResource(drawableId);
-                    selectedBackgroundResId = drawableId;
+                    updateSelection(imgButton, false, drawableId);
                 }
             });
 
             grid.addView(imgButton);
         }
     }
+
+    private void updateSelection(ImageButton button, boolean isAvatar, int drawableId) {
+        if (isAvatar) {
+            if (selectedAvatarButton != null)
+                selectedAvatarButton.setBackgroundResource(R.drawable.square_avatar);
+            button.setBackgroundResource(R.drawable.selected_frame);
+            selectedAvatarButton = button;
+            avatarImage.setImageResource(drawableId);
+            selectedAvatarResId = drawableId;
+        } else {
+            if (selectedBackgroundButton != null)
+                selectedBackgroundButton.setBackgroundResource(R.drawable.square_avatar);
+            button.setBackgroundResource(R.drawable.selected_frame);
+            selectedBackgroundButton = button;
+            avatarBackground.setImageResource(drawableId);
+            selectedBackgroundResId = drawableId;
+        }
+    }
+
+    private boolean validateInputs(String username, String password, String email) {
+        if (username.isEmpty()) {
+            showError("Please enter a username");
+            return false;
+        }
+        if (password.isEmpty()) {
+            showError("Please enter a password");
+            return false;
+        }
+        if (password.length() < 6) {
+            showError("Password must be at least 6 characters long");
+            return false;
+        }
+        if (email.isEmpty()) {
+            showError("Please enter an email address");
+            return false;
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showError("Please enter a valid email address");
+            return false;
+        }
+        return true;
+    }
+
+    private void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        voiceManager.speak(message);
+    }
+
+    private void saveUserAccount(String username, String password, String email) {
+        SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+        editor.putString("username", username);
+        editor.putString("password", password);
+        editor.putString("email", email);
+        editor.putInt("selected_avatar", selectedAvatarResId);
+        editor.putInt("selected_background", selectedBackgroundResId);
+        editor.putString("voice_id", voiceManager.getCurrentVoiceType());
+        editor.putBoolean("account_created", true);
+        editor.apply();
+    }
+
+    private void stopVoice() {
+        if (voiceManager != null) voiceManager.stop();
+    }
+
+    @Override protected void onPause() {
+        super.onPause();
+        stopVoice();
+    }
+
+    @Override protected void onDestroy() {
+        stopVoice();
+        super.onDestroy();
+    }
+
+    @Override public void onBackPressed() {
+        stopVoice();
+        super.onBackPressed();
+    }
+
+    public VoiceManager getVoiceManager() {
+        return voiceManager;
+    }
+
+    public int getSelectedAvatarResId() {
+        return selectedAvatarResId;
+    }
+
+    public int getSelectedBackgroundResId() {
+        return selectedBackgroundResId;
+    }
+
+    public void showBackgroundStep() {
+        isAvatarStep = false;
+        inflateOverlayContent(R.layout.createaccount);
+    }
+    public static final String VOICE_TYPE_CLEOPATRA = "Cleopatra";
+    public static final String VOICE_TYPE_PHARAOH = "Pharaoh";
+    public static String getVoiceIdFromType(String voiceType) {
+        if (voiceType == null) return "en-us-x-iol-local"; // fallback default
+        switch (voiceType) {
+            case VOICE_TYPE_PHARAOH:
+                return "en-us-x-iol-local"; // Male voice ID
+            case VOICE_TYPE_CLEOPATRA:
+                return "en-us-x-iob-local"; // Female voice ID
+            default:
+                return "en-us-x-iol-local"; // Default to male voice if unknown
+        }
+    }
 }
+
