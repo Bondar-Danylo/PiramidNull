@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_bg"
-    tools:context=".FragmentNote1">
-
+    tools:context=".DynamicNotesFragment">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,12 +31,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="@integer/material_motion_duration_short_1"
-                    android:text="Field Note #1"
                     android:fontFamily="@font/handwritten"
                     android:textSize="20dp"
                     android:letterSpacing="0.05"
                     android:textColor="@color/sand"
-                    android:paddingBottom="7dp">
+                    android:paddingBottom="7dp"
+                    android:id="@+id/fieldNoteNu">
                 </TextView>
 
                 <TextView
@@ -49,20 +48,20 @@
                     android:textSize="20dp"
                     android:letterSpacing="0.05"
                     android:textColor="@color/sand"
-                    android:text="10-10-10"/>
+                    android:id="@+id/dateTextView"/>
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pyramids"
                 android:gravity="center"
                 android:textColor="@color/sand"
                 android:textSize="30dp"
                 android:fontFamily="@font/handwritten"
                 android:letterSpacing=".1"
-                android:layout_margin="40dp"/>
+                android:layout_margin="40dp"
+                android:id="@+id/titleTextView"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -133,13 +132,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="The pyramids were constructured with uncanny precision, each base aligned to the cardinal points within a fraction of a degree - suggesting the use of stellar calibration technology."
                         android:fontFamily="@font/handwritten"
                         android:textSize="22dp"
                         android:letterSpacing="0.05"
                         android:lineHeight="35dp"
                         android:textColor="@color/sand"
-
+                        android:id="@+id/contentTextView"
                         android:layout_marginBottom="7dp"/>
 
                 </RelativeLayout>

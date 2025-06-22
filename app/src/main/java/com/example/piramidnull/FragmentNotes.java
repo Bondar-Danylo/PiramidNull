@@ -33,10 +33,14 @@ public class FragmentNotes extends Fragment {
         new TabLayoutMediator(tabLayout, nestedNotes,
                 (tab, position) -> {
                     switch (position){
-                        case 0: tab.setText("Discovery "+ (position + 1));
+                        case 0: tab.setText(String.valueOf(position + 1));
                             break;
 
-                        case 1: tab.setText("Discovery "+ (position + 1));
+                        case 1: tab.setText(String.valueOf(position + 1));
+                            break;
+                        case 2: tab.setText(String.valueOf(position + 1));
+                            break;
+                        case 3: tab.setText(String.valueOf(position + 1));
                             break;
                     }
                 }
