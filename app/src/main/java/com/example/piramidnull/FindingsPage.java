@@ -1,0 +1,49 @@
+package com.example.piramidnull;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+
+public class FindingsPage extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_findings_page);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        FrameLayout frameLayout;
+        frameLayout = (FrameLayout) findViewById(R.id.frame_findings);
+        getSupportFragmentManager().beginTransaction().add(R.id.frame_findings, new FragmentObjects()).commit();
+
+        Button objectsBtn = (Button) findViewById(R.id.objects_btn);
+        Button notesBtn = (Button) findViewById(R.id.notes_btn);
+
+        objectsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_findings, new FragmentObjects()).commit();
+            }
+        });
+
+        notesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_findings, new FragmentNotes()).commit();
+            }
+        });
+    }
+}
