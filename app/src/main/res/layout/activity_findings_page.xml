@@ -10,14 +10,24 @@
     android:orientation="vertical"
     android:background="@color/dark_bg">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Research Findings"
-        android:id="@+id/title_page"
-        android:textAlignment="center"
-        android:padding="30dp"
-        android:textColor="@color/sand"/>
+        android:padding="30dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Research Findings"
+            android:id="@+id/title_page"
+            android:textAlignment="center"
+            android:textColor="@color/sand"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_left"
+            android:id="@+id/arrowLeft"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,8 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Objects"
-            android:layout_marginRight="5dp"
             android:background="@drawable/btn_blue"
+            android:layout_marginRight="5dp"
             android:textColor="@color/main_blue"
             android:id="@+id/objects_btn"/>
 
@@ -41,9 +51,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@drawable/btn_blue"
             android:text="Field Notes"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/btn_blue"
             android:textColor="@color/main_blue"
             android:id="@+id/notes_btn"/>
 

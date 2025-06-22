@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_bg"
+    tools:context=".ObjectPage">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/avatar1"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="70dp"
+        android:id="@+id/objectImage"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollContainer">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="830dp"
+                android:background="@drawable/object_border_half"
+                android:orientation="vertical"
+                android:layout_marginTop="260dp"
+                android:padding="20dp"
+                android:id="@+id/objectDetails">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Eye of Toth"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/handwritten"
+                    android:textStyle="bold"
+                    android:textSize="30dp"
+                    android:padding="10dp"
+                    android:textColor="@color/sand"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/objectTitle"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/foundBox">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="FOUND:"
+                        android:textColor="@color/sandT"
+                        android:layout_marginRight="15dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:background="@drawable/underline"
+                        android:text="Tomb in the Maze"
+                        android:fontFamily="@font/handwritten"
+                        android:textSize="20dp"
+                        android:letterSpacing="0.05"
+                        android:textColor="@color/sand"
+                        android:paddingBottom="7dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/originBox">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ORIGIN:"
+                        android:textColor="@color/sandT"
+                        android:layout_marginRight="15dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:background="@drawable/underline"
+                        android:text="Ancient Egypt"
+                        android:fontFamily="@font/handwritten"
+                        android:textSize="20dp"
+                        android:letterSpacing="0.05"
+                        android:textColor="@color/sand"
+                        android:paddingBottom="7dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/dateBox">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Date:"
+                        android:textAllCaps="true"
+                        android:textColor="@color/sandT"
+                        android:layout_marginRight="15dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:background="@drawable/underline"
+                        android:text="10-10-3010"
+                        android:fontFamily="@font/handwritten"
+                        android:textSize="20dp"
+                        android:letterSpacing="0.05"
+                        android:textColor="@color/sand"
+                        android:paddingBottom="7dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:id="@+id/functionBox">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Function:"
+                        android:textAllCaps="true"
+                        android:textColor="@color/sandT"
+                        android:layout_marginRight="15dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:background="@drawable/textbox"
+                        android:padding="5dp"
+                        android:paddingStart="10dp"
+                        android:text="Unknown, but seems to require some kind of power or electricity in order to work"
+                        android:fontFamily="@font/handwritten"
+                        android:textSize="20dp"
+                        android:letterSpacing="0.02"
+                        android:textColor="@color/sand"
+                        android:paddingBottom="7dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/storyBox">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Story:"
+                        android:textAllCaps="true"
+                        android:textColor="@color/sandT"
+                        android:layout_marginRight="15dp"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"
+                        android:background="@drawable/textbox"
+                        android:padding="5dp"
+                        android:paddingStart="10dp"
+                        android:text="Recovered obsidian orb initially mistaken for a ceremonial amulet. However, under UV light, its surface revealed intricate micro-etchings. Roughly the size of a walnut, but unnaturally heavy—approximately 3.4 kg. Surface appears to be black opal, yet under magnification no crystalline structure is evident. Internal light shifts in spirals when unobserved. When stared at directly, the light ceases all movement, as if aware. Despite its nickname, it resembles no anatomical eye. Yet all witnesses refer to it as such, even when given alternate descriptions beforehand. This may indicate memetic influence."
+                        android:fontFamily="@font/handwritten"
+                        android:textSize="20dp"
+                        android:letterSpacing="0.02"
+                        android:textColor="@color/sand"
+                        android:paddingBottom="7dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+        </FrameLayout>
+
+
+
+
+
+
+        <!--    </LinearLayout>-->
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:id="@+id/top">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Objects"
+            android:id="@+id/mainTitle"
+            android:textAlignment="center"
+            android:textColor="@color/sand"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_left"
+            android:id="@+id/arrowLeft"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
