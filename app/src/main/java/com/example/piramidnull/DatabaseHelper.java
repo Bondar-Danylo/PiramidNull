@@ -15,7 +15,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_ID = "id";
     public static final String COL_USERNAME = "username";
     public static final String COL_PASSWORD = "password";
-    public static final String COL_BIRTHDAY = "birthday";
     public static final String COL_VOICE_TYPE = "voice_type";
     public static final String COL_AVATAR = "avatar";
     public static final String COL_BACKGROUND = "background";
@@ -30,7 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_USERNAME + " TEXT, " +
                 COL_PASSWORD + " TEXT, " +
-                COL_BIRTHDAY + " TEXT, " +
                 COL_VOICE_TYPE + " INTEGER, " +
                 COL_AVATAR + " TEXT, " +
                 COL_BACKGROUND + " TEXT)");
@@ -47,7 +45,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COL_USERNAME, username);
         values.put(COL_PASSWORD, password);
-        values.put(COL_BIRTHDAY, birthday);
         values.put(COL_VOICE_TYPE, voiceType);
         values.put(COL_AVATAR, avatar);
         values.put(COL_BACKGROUND, background);

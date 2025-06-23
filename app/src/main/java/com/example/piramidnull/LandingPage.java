@@ -2,7 +2,6 @@ package com.example.piramidnull;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -40,8 +39,6 @@ public class LandingPage extends AppCompatActivity {
         dbHelper.insertUser("admin", "admin",
                 "11.01.2001", 1,
                 "avatar_1.png", "background_1.png");
-
-//        Log.d("DB", "User Created");
 
         
         Button loginBtn = findViewById(R.id.loginBtn);

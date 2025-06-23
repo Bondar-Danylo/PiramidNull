@@ -2,8 +2,6 @@ package com.example.piramidnull;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -17,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.imageview.ShapeableImageView;
+
 
 public class UserAccount extends AppCompatActivity {
 
@@ -37,6 +36,7 @@ public class UserAccount extends AppCompatActivity {
             R.drawable.background_1, R.drawable.background_2, R.drawable.background_3,
             R.drawable.background_4, R.drawable.background_5, R.drawable.background_6
     };
+
 
     private int selectedAvatarResId = R.drawable.avatar_4;
     private int selectedBackgroundResId = R.drawable.background_1;
@@ -62,7 +62,6 @@ public class UserAccount extends AppCompatActivity {
         });
 
         inflateOverlayContent(R.layout.createaccount);
-        showOverlayWithDelay();
     }
 
     private void inflateOverlayContent(int layoutResId) {
@@ -120,6 +119,7 @@ public class UserAccount extends AppCompatActivity {
 
     // Custom Spinner Adapter
     public class CustomSpinnerAdapter extends ArrayAdapter<String> {
+        DatabaseHelper dbHelper;
         private final Context context;
         private final String[] values;
         private final int[] icons;
@@ -153,6 +153,7 @@ public class UserAccount extends AppCompatActivity {
     }
 
     private void setupDetailsListeners(View root) {
+
         // Spinner for voice types
         Spinner genderSpinner = root.findViewById(R.id.genderSpinner);
 
@@ -168,16 +169,23 @@ public class UserAccount extends AppCompatActivity {
         Button createAccount = root.findViewById(R.id.createaccount_button);
         EditText username = root.findViewById(R.id.username_input);
         EditText email = root.findViewById(R.id.email_input);
+        EditText password = root.findViewById(R.id.password_input);
 
         createAccount.setOnClickListener(v -> {
             String user = username.getText().toString().trim();
             String mail = email.getText().toString().trim();
             String voice = genderSpinner.getSelectedItem().toString();
+            String pass = password.getText().toString().trim();
 
             if (user.isEmpty() || mail.isEmpty()) {
                 Toast.makeText(UserAccount.this, "Please enter username and email", Toast.LENGTH_SHORT).show();
                 return;
             }
+           DatabaseHelper dbHelper = new DatabaseHelper(this);
+
+//            Add user to DB. What kind of fields do we expect?
+//            dbHelper.insertUser(user,pass, "11.01.2001", voice, avatarImage.toString(), avatarBackground.toString());
+
 
             Intent intent = new Intent(UserAccount.this, MainSliderActivity.class);
             intent.putExtra("USERNAME", user);
@@ -220,15 +228,6 @@ public class UserAccount extends AppCompatActivity {
         avatarOverlay.setOnClickListener(v -> avatarOverlay.setVisibility(View.GONE));
     }
 
-    private void showOverlayWithDelay() {
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (!isFinishing()) {
-                avatarOverlay.setVisibility(View.VISIBLE);
-                avatarOverlay.setAlpha(0f);
-                avatarOverlay.animate().alpha(1f).setDuration(300).start();
-            }
-        }, 1500);
-    }
 
     private void showStep(boolean isCharacterStep) {
         avatarStepLayout.setVisibility(isCharacterStep ? View.VISIBLE : View.GONE);
