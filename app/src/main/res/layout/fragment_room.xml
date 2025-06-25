@@ -21,14 +21,14 @@
             android:background="@drawable/room_frame"
             android:padding="24dp"
             android:gravity="center"
-            android:layout_marginBottom="24dp">
+            android:layout_marginBottom="12dp">
 
             <TextView
                 android:id="@+id/challenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Challanges"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textAllCaps="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="40dp"
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Room Title"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:layout_marginTop="30dp"
                 android:textColor="@color/dark_gold"
                 android:fontFamily="@font/poppins" />
@@ -58,10 +58,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="OPEN TOOL"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:backgroundTint="@color/main_blue"
                 android:textColor="@android:color/black" />
         </LinearLayout>

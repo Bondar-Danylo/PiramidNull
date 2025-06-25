@@ -1,25 +1,39 @@
 package com.example.piramidnull;
 
 import android.content.Context;
-import android.speech.tts.TextToSpeech;
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.util.Locale;
 
 public class VoiceManager {
-
     private static final String TAG = "VoiceManager";
-    private static VoiceManager instance;
+    private static final String PREFS_NAME = "voice_preferences";
+    private static final String KEY_VOICE_TYPE = "voice_type";
 
+    private static VoiceManager instance;
     private final Context context;
-    private TextToSpeech tts;
+    private final GoogleTTSHelper ttsHelper;
+    private final SharedPreferences preferences;
+    private final Handler mainHandler;
+
+    private String currentVoiceType = "Cleopatra"; // Default
     private boolean isInitialized = false;
-    private String currentVoiceType = "female"; // Default to female
+    private boolean isSpeaking = false;
+
+    private String lastSpokenText = null; // For replay support
 
     private VoiceManager(Context context) {
         this.context = context.getApplicationContext();
-        initTextToSpeech();
+        this.ttsHelper = new GoogleTTSHelper(this.context, "en-GB");
+        this.preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        this.mainHandler = new Handler(Looper.getMainLooper());
+
+        // Load saved voice preference
+        currentVoiceType = preferences.getString(KEY_VOICE_TYPE, "Cleopatra");
+        isInitialized = true;
+
+        Log.d(TAG, "VoiceManager initialized with voice type: " + currentVoiceType);
     }
 
     public static synchronized VoiceManager getInstance(Context context) {
@@ -29,51 +43,97 @@ public class VoiceManager {
         return instance;
     }
 
-    private void initTextToSpeech() {
-        tts = new TextToSpeech(context, status -> {
-            if (status == TextToSpeech.SUCCESS) {
-                // Set default voice to female UK English
-                int result = tts.setLanguage(Locale.UK);
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Log.e(TAG, "Language not supported");
-                    Toast.makeText(context, "TTS language not supported", Toast.LENGTH_SHORT).show();
-                } else {
-                    isInitialized = true;
-                    setVoice(currentVoiceType);
-                    Log.d(TAG, "TTS initialized successfully");
-                }
-            } else {
-                Log.e(TAG, "TTS Initialization failed");
-                Toast.makeText(context, "TTS Initialization failed", Toast.LENGTH_SHORT).show();
+    public void speak(String text) {
+        speak(text, null);
+    }
+
+    public void speak(String text, SpeechCallback callback) {
+        if (!isInitialized) {
+            Log.w(TAG, "VoiceManager not initialized");
+            runOnMainThread(() -> {
+                if (callback != null) callback.onError("VoiceManager not initialized");
+            });
+            return;
+        }
+
+        if (text == null || text.trim().isEmpty()) {
+            Log.w(TAG, "Empty text provided for speech");
+            runOnMainThread(() -> {
+                if (callback != null) callback.onError("Empty text");
+            });
+            return;
+        }
+
+        stop(); // Stop any ongoing playback
+
+        lastSpokenText = text;
+        isSpeaking = true;
+
+        Log.d(TAG, "Speaking text: " + text + " with voice: " + currentVoiceType);
+
+        ttsHelper.synthesizeSpeech(text, currentVoiceType, new GoogleTTSHelper.AudioReadyCallback() {
+            @Override
+            public void onAudioReady(byte[] audioData) {
+                runOnMainThread(() -> {
+                    Log.d(TAG, "Audio data received");
+                    if (callback != null) callback.onSpeechReady();
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnMainThread(() -> {
+                    Log.e(TAG, "TTS Error: " + e.getMessage(), e);
+                    isSpeaking = false;
+                    if (callback != null) callback.onError(e.getMessage());
+                });
+            }
+
+            @Override
+            public void onPlaybackStarted() {
+                runOnMainThread(() -> {
+                    Log.d(TAG, "Playback started");
+                    isSpeaking = true;
+                    if (callback != null) callback.onSpeechStarted();
+                });
+            }
+
+            @Override
+            public void onPlaybackCompleted() {
+                runOnMainThread(() -> {
+                    Log.d(TAG, "Playback completed");
+                    isSpeaking = false;
+                    if (callback != null) callback.onSpeechCompleted();
+                });
             }
         });
     }
 
-    public synchronized void setVoice(String voiceType) {
-        if (!isInitialized) {
-            Log.w(TAG, "TTS not initialized yet");
+    public void stop() {
+        if (ttsHelper != null) {
+            ttsHelper.stopPlayback();
+        }
+        isSpeaking = false;
+        Log.d(TAG, "Speech stopped");
+    }
+
+    public void setVoiceType(String voiceType) {
+        if (voiceType == null || voiceType.isEmpty()) {
+            Log.w(TAG, "Invalid voice type");
             return;
         }
 
-        currentVoiceType = voiceType.toLowerCase();
+        String oldVoiceType = currentVoiceType;
+        currentVoiceType = voiceType;
 
-        // Android TTS does not have direct male/female voice setting for all devices,
-        // but we can try to select voice with different pitch and locale variants.
-        // For demonstration, we'll adjust pitch for male/female:
+        preferences.edit()
+                .putString(KEY_VOICE_TYPE, voiceType)
+                .apply();
 
-        if ("male".equals(currentVoiceType)) {
-            tts.setPitch(0.8f); // Slightly lower pitch for male
-            tts.setSpeechRate(1.0f);
-            Log.d(TAG, "Voice set to MALE");
-        } else {
-            // Default female voice
-            tts.setPitch(1.2f); // Slightly higher pitch for female
-            tts.setSpeechRate(1.0f);
-            Log.d(TAG, "Voice set to FEMALE");
-        }
+        Log.d(TAG, "Voice type changed from " + oldVoiceType + " to " + currentVoiceType);
     }
 
-    public synchronized String getCurrentVoiceType() {
+    public String getCurrentVoiceType() {
         return currentVoiceType;
     }
 
@@ -81,35 +141,53 @@ public class VoiceManager {
         return isInitialized;
     }
 
-    public synchronized void speak(String text) {
-        if (!isInitialized) {
-            Log.e(TAG, "TTS not initialized");
-            Toast.makeText(context, "TextToSpeech not initialized", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (text == null || text.trim().isEmpty()) {
-            Log.w(TAG, "Empty text to speak");
-            return;
-        }
-
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, "tts_utterance_id");
-        Log.d(TAG, "Speaking: " + text);
+    public boolean isSpeaking() {
+        return isSpeaking;
     }
 
-    public synchronized void stop() {
-        if (tts != null && tts.isSpeaking()) {
-            tts.stop();
-            Log.d(TAG, "TTS stopped");
+    public void testVoice(SpeechCallback callback) {
+        String testMessage = getTestMessage(currentVoiceType);
+        speak(testMessage, callback);
+    }
+
+    private String getTestMessage(String voiceType) {
+        switch (voiceType) {
+            case "Pharaoh":
+                return "Greetings! I am Pharaoh, your commanding voice assistant.";
+            case "Cleopatra":
+                return "Hello! I am Cleopatra, your elegant voice assistant.";
+            default:
+                return "Hello! I am your guide bot assistant.";
         }
     }
 
-    public synchronized void destroy() {
-        if (tts != null) {
-            tts.stop();
-            tts.shutdown();
-            tts = null;
-            isInitialized = false;
-            Log.d(TAG, "TTS destroyed");
+    public void replayLastMessage(SpeechCallback callback) {
+        if (lastSpokenText != null) {
+            speak(lastSpokenText, callback);
+        } else {
+            Log.w(TAG, "No message to replay");
+            runOnMainThread(() -> {
+                if (callback != null) callback.onError("No previous message");
+            });
         }
+    }
+
+    public void release() {
+        stop();
+        if (ttsHelper != null) {
+            ttsHelper.release();
+        }
+        Log.d(TAG, "VoiceManager resources released");
+    }
+
+    private void runOnMainThread(Runnable runnable) {
+        mainHandler.post(runnable);
+    }
+
+    public interface SpeechCallback {
+        default void onSpeechReady() {}
+        default void onSpeechStarted() {}
+        default void onSpeechCompleted() {}
+        default void onError(String error) {}
     }
 }

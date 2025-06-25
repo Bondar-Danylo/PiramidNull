@@ -26,4 +26,21 @@ public class RoomFragmentAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return roomList.size();
     }
+
+    // Optional: If you want smoother animations and more stable item handling
+    @Override
+    public long getItemId(int position) {
+        // Return a unique ID for each item
+        return roomList.get(position).getTitle().hashCode();
+    }
+
+    @Override
+    public boolean containsItem(long itemId) {
+        for (Room room : roomList) {
+            if (room.getTitle().hashCode() == itemId) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

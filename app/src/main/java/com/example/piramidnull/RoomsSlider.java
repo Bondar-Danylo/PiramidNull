@@ -1,6 +1,9 @@
 package com.example.piramidnull;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -20,8 +23,9 @@ public class RoomsSlider extends AppCompatActivity {
     ImageView chatbotButton;
     int currentPosition = 0;
 
-    // Receive voice type from Intent
     String selectedVoiceType = "";
+
+    private static final int ANIMATION_DURATION = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +34,18 @@ public class RoomsSlider extends AppCompatActivity {
 
         dotsContainer = findViewById(R.id.dotsContainer);
         viewPager = findViewById(R.id.roomSlider);
-        chatbotButton = findViewById(R.id.chatbotButton);  // Initialize here after setContentView
+        chatbotButton = findViewById(R.id.chatbotButton);
 
-        // Get voice type from intent and assign to class variable
         selectedVoiceType = getIntent().getStringExtra("voiceType");
 
-        // Set chatbotButton icon based on selected voice type
         if ("Cleopatra".equalsIgnoreCase(selectedVoiceType)) {
             chatbotButton.setImageResource(R.drawable.ic_female);
         } else if ("Pharaoh".equalsIgnoreCase(selectedVoiceType)) {
             chatbotButton.setImageResource(R.drawable.ic_male);
         } else {
-            chatbotButton.setImageResource(R.drawable.guidebot);  // Default icon
+            chatbotButton.setImageResource(R.drawable.guidebot);
         }
 
-        // Prepare rooms list
         List<Room> rooms = new ArrayList<>();
         rooms.add(new Room("The Puzzle", R.drawable.puzzle_room));
         rooms.add(new Room("The Maze", R.drawable.maze_room));
@@ -59,12 +60,13 @@ public class RoomsSlider extends AppCompatActivity {
         viewPager.setPadding(-40, 0, -40, 0);
         viewPager.setPageTransformer(new ZoomOutPageTransformer());
 
-        addDotsIndicator(0);
+        setupDots(rooms.size());
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 currentPosition = position;
-                addDotsIndicator(position);
+                animateDots(position);
             }
         });
 
@@ -75,17 +77,69 @@ public class RoomsSlider extends AppCompatActivity {
         navPuzzle.setOnClickListener(v -> {
             viewPager.setCurrentItem(0, true);
             currentPosition = 0;
+            animateDots(currentPosition);
         });
         navLaser.setOnClickListener(v -> {
             viewPager.setCurrentItem(1, true);
             currentPosition = 1;
+            animateDots(currentPosition);
         });
         navMaze.setOnClickListener(v -> {
             viewPager.setCurrentItem(2, true);
             currentPosition = 2;
+            animateDots(currentPosition);
         });
 
         chatbotButton.setOnClickListener(v -> openChatbot());
+    }
+
+    private void setupDots(int count) {
+        dots = new ImageView[count];
+        dotsContainer.removeAllViews();
+
+        for (int i = 0; i < count; i++) {
+            final int index = i;
+            dots[i] = new ImageView(this);
+            dots[i].setImageResource(i == 0 ? R.drawable.active_dot : R.drawable.inactive_dot);
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(12, 0, 12, 0);
+            dotsContainer.addView(dots[i], params);
+
+            // Make dot clickable
+            dots[i].setOnClickListener(v -> {
+                viewPager.setCurrentItem(index, true);
+                currentPosition = index;
+                animateDots(index);
+            });
+        }
+    }
+
+    private void animateDots(int position) {
+        for (int i = 0; i < dots.length; i++) {
+            if (i == position) {
+                dots[i].setImageResource(R.drawable.active_dot);
+                animateDotScale(dots[i], 1.0f, 1.4f);  // Animate active dot
+            } else {
+                dots[i].setImageResource(R.drawable.inactive_dot);
+                animateDotScale(dots[i], 1.4f, 1.0f);  // Animate inactive dot back to normal
+            }
+        }
+    }
+
+    private void animateDotScale(View dot, float fromScale, float toScale) {
+        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                fromScale, toScale,
+                fromScale, toScale,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f
+        );
+        scaleAnimation.setFillAfter(true);
+        scaleAnimation.setDuration(ANIMATION_DURATION);
+        dot.startAnimation(scaleAnimation);
     }
 
     private void openChatbot() {
@@ -116,23 +170,6 @@ public class RoomsSlider extends AppCompatActivity {
                 return "laser";
             default:
                 return "puzzle";
-        }
-    }
-
-    private void addDotsIndicator(int position) {
-        dotsContainer.removeAllViews();
-        dots = new ImageView[3];
-
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new ImageView(this);
-            dots[i].setImageResource(i == position ? R.drawable.active_dot : R.drawable.inactive_dot);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(-4, 0, -4, 0);
-            dotsContainer.addView(dots[i], params);
         }
     }
 }

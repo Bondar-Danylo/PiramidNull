@@ -2,12 +2,12 @@ package com.example.piramidnull;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -21,7 +21,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class ChatbotActivity extends Dialog {
 
@@ -40,7 +39,7 @@ public class ChatbotActivity extends Dialog {
     private final int botButtonX;
     private final int botButtonY;
 
-    private TextToSpeech textToSpeech;
+    public final GoogleTTSHelper googleTTSHelper;
 
     private final HashMap<String, List<String>> roomGuidanceMap = new HashMap<>();
 
@@ -51,6 +50,8 @@ public class ChatbotActivity extends Dialog {
         this.botButtonX = botButtonX;
         this.botButtonY = botButtonY;
         this.selectedVoiceType = selectedVoiceType != null ? selectedVoiceType : "Pharaoh";
+
+        this.googleTTSHelper = new GoogleTTSHelper(context, "en-GB");
 
         initializeMessages();
     }
@@ -70,21 +71,6 @@ public class ChatbotActivity extends Dialog {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
-        textToSpeech = new TextToSpeech(context, status -> {
-            if (status == TextToSpeech.SUCCESS) {
-                int result = textToSpeech.setLanguage(Locale.US);
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Log.e(TAG, "TTS Language not supported");
-                    Toast.makeText(context, "Text to speech language not supported", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d(TAG, "TextToSpeech initialized");
-                }
-            } else {
-                Log.e(TAG, "TTS Initialization failed");
-                Toast.makeText(context, "Text to speech initialization failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         initializeViews();
         setupClickListeners();
         showFirstMessage();
@@ -101,28 +87,21 @@ public class ChatbotActivity extends Dialog {
         roomMessages = roomGuidanceMap.get(roomType);
         if (roomMessages != null && !roomMessages.isEmpty()) {
             chatText.setText(roomMessages.get(0));
-            Log.d(TAG, "Set first message: " + roomMessages.get(0).substring(0, Math.min(50, roomMessages.get(0).length())));
-        } else {
-            Log.w(TAG, "No messages found for room type: " + roomType);
         }
-
         Animation slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up);
         dialogContainer.startAnimation(slideUp);
     }
 
     private void setupClickListeners() {
         continueButton.setOnClickListener(v -> {
-            Log.d(TAG, "Continue button clicked");
             showNextMessage();
         });
 
         closeButton.setOnClickListener(v -> {
-            Log.d(TAG, "Close button clicked");
             dismissWithAnimation();
         });
 
         View.OnClickListener speakListener = v -> {
-            Log.d(TAG, "Speak listener triggered");
             speakCurrentMessage();
         };
 
@@ -130,40 +109,82 @@ public class ChatbotActivity extends Dialog {
         chatText.setOnClickListener(speakListener);
     }
 
+    // Check SharedPreferences if greeting was already spoken
+    private boolean isGreetingSpoken() {
+        SharedPreferences prefs = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        return prefs.getBoolean("greeting_spoken", false);
+    }
+
+    private void setGreetingSpokenFlag() {
+        SharedPreferences prefs = context.getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("greeting_spoken", true).apply();
+    }
+
     private void initializeMessages() {
-        String greeting;
-        if ("Cleopatra".equalsIgnoreCase(selectedVoiceType)) {
-            greeting = "Greetings, young explorer! I’m Cleopatra, your guide through the ancient mysteries.";
+        boolean greetingDone = isGreetingSpoken();
+
+        String greeting = "Cleopatra".equalsIgnoreCase(selectedVoiceType) ?
+                "Greetings, young explorer! I’m Cleopatra, your guide through the ancient mysteries." :
+                "Salutations, brave adventurer! I am Pharaoh, and I shall guide you through these sacred chambers.";
+
+        List<String> puzzleMessages;
+        List<String> mazeMessages;
+        List<String> laserMessages;
+
+        if (!greetingDone) {
+            puzzleMessages = new ArrayList<>(List.of(
+                    greeting,
+                    "Welcome to the Puzzle Room! This room will test your logic and problem-solving skills.",
+                    "Look for patterns, numbers, and hidden symbols. They often contain the key to solving puzzles.",
+                    "Take your time to analyze each puzzle carefully. Rushing often leads to mistakes.",
+                    "If you get stuck, try approaching the problem from a different angle or perspective.",
+                    "Remember: every puzzle has a logical solution. Trust your reasoning and stay focused!",
+                    "You're all set! Good luck solving the puzzles. Tap the X to close and start your challenge!"
+            ));
+            mazeMessages = new ArrayList<>(List.of(
+                    greeting,
+                    "Welcome to the Maze Room! Navigation and spatial awareness are your keys to success here.",
+                    "Always keep track of where you've been to avoid walking in circles endlessly.",
+                    "Look for visual cues like arrows, colored lights, or special markings on the walls.",
+                    "Some walls might be illusions or secret passages. Don't be afraid to test boundaries!",
+                    "Stay calm and move methodically. Panic and rushing lead to poor decisions in mazes.",
+                    "You're ready to navigate! Remember to stay focused. Tap the X to close and enter the maze!"
+            ));
+            laserMessages = new ArrayList<>(List.of(
+                    greeting,
+                    "Welcome to the Laser Room! Precision, timing, and quick reflexes are everything here.",
+                    "Observe the laser patterns carefully before making any moves. Each pattern has a rhythm.",
+                    "Look for mirrors, crystals, or reflective objects that might redirect laser beams.",
+                    "Many lasers have predictable on/off cycles. Study the timing before you move.",
+                    "Move slowly and deliberately. One wrong step could trigger alarms or reset your progress!",
+                    "You're prepared for the laser challenge! Stay sharp and move carefully. Tap X to begin!"
+            ));
         } else {
-            greeting = "Salutations, brave adventurer! I am Pharaoh, and I shall guide you through these sacred chambers.";
+            puzzleMessages = new ArrayList<>(List.of(
+                    "Welcome to the Puzzle Room! This room will test your logic and problem-solving skills.",
+                    "Look for patterns, numbers, and hidden symbols. They often contain the key to solving puzzles.",
+                    "Take your time to analyze each puzzle carefully. Rushing often leads to mistakes.",
+                    "If you get stuck, try approaching the problem from a different angle or perspective.",
+                    "Remember: every puzzle has a logical solution. Trust your reasoning and stay focused!",
+                    "You're all set! Good luck solving the puzzles. Tap the X to close and start your challenge!"
+            ));
+            mazeMessages = new ArrayList<>(List.of(
+                    "Welcome to the Maze Room! Navigation and spatial awareness are your keys to success here.",
+                    "Always keep track of where you've been to avoid walking in circles endlessly.",
+                    "Look for visual cues like arrows, colored lights, or special markings on the walls.",
+                    "Some walls might be illusions or secret passages. Don't be afraid to test boundaries!",
+                    "Stay calm and move methodically. Panic and rushing lead to poor decisions in mazes.",
+                    "You're ready to navigate! Remember to stay focused. Tap the X to close and enter the maze!"
+            ));
+            laserMessages = new ArrayList<>(List.of(
+                    "Welcome to the Laser Room! Precision, timing, and quick reflexes are everything here.",
+                    "Observe the laser patterns carefully before making any moves. Each pattern has a rhythm.",
+                    "Look for mirrors, crystals, or reflective objects that might redirect laser beams.",
+                    "Many lasers have predictable on/off cycles. Study the timing before you move.",
+                    "Move slowly and deliberately. One wrong step could trigger alarms or reset your progress!",
+                    "You're prepared for the laser challenge! Stay sharp and move carefully. Tap X to begin!"
+            ));
         }
-
-        List<String> puzzleMessages = new ArrayList<>();
-        puzzleMessages.add(greeting);
-        puzzleMessages.add("Welcome to the Puzzle Room! This room will test your logic and problem-solving skills.");
-        puzzleMessages.add("Look for patterns, numbers, and hidden symbols. They often contain the key to solving puzzles.");
-        puzzleMessages.add("Take your time to analyze each puzzle carefully. Rushing often leads to mistakes.");
-        puzzleMessages.add("If you get stuck, try approaching the problem from a different angle or perspective.");
-        puzzleMessages.add("Remember: every puzzle has a logical solution. Trust your reasoning and stay focused!");
-        puzzleMessages.add("You're all set! Good luck solving the puzzles. Tap the X to close and start your challenge!");
-
-        List<String> mazeMessages = new ArrayList<>();
-        mazeMessages.add(greeting);
-        mazeMessages.add("Welcome to the Maze Room! Navigation and spatial awareness are your keys to success here.");
-        mazeMessages.add("Always keep track of where you've been to avoid walking in circles endlessly.");
-        mazeMessages.add("Look for visual cues like arrows, colored lights, or special markings on the walls.");
-        mazeMessages.add("Some walls might be illusions or secret passages. Don't be afraid to test boundaries!");
-        mazeMessages.add("Stay calm and move methodically. Panic and rushing lead to poor decisions in mazes.");
-        mazeMessages.add("You're ready to navigate! Remember to stay focused. Tap the X to close and enter the maze!");
-
-        List<String> laserMessages = new ArrayList<>();
-        laserMessages.add(greeting);
-        laserMessages.add("Welcome to the Laser Room! Precision, timing, and quick reflexes are everything here.");
-        laserMessages.add("Observe the laser patterns carefully before making any moves. Each pattern has a rhythm.");
-        laserMessages.add("Look for mirrors, crystals, or reflective objects that might redirect laser beams.");
-        laserMessages.add("Many lasers have predictable on/off cycles. Study the timing before you move.");
-        laserMessages.add("Move slowly and deliberately. One wrong step could trigger alarms or reset your progress!");
-        laserMessages.add("You're prepared for the laser challenge! Stay sharp and move carefully. Tap X to begin!");
 
         roomGuidanceMap.put("puzzle", puzzleMessages);
         roomGuidanceMap.put("maze", mazeMessages);
@@ -174,9 +195,6 @@ public class ChatbotActivity extends Dialog {
         currentMessageIndex = 0;
         if (roomMessages != null && !roomMessages.isEmpty()) {
             chatText.setText(roomMessages.get(0));
-            new Handler(Looper.getMainLooper()).postDelayed(this::speakCurrentMessage, 200);
-        } else {
-            Log.e(TAG, "No room messages available for first message");
         }
     }
 
@@ -186,12 +204,7 @@ public class ChatbotActivity extends Dialog {
             return;
         }
 
-        if (textToSpeech != null && textToSpeech.isSpeaking()) {
-            textToSpeech.stop();
-        }
-
         currentMessageIndex++;
-
         Animation fadeOut = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
         fadeOut.setDuration(200);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
@@ -200,50 +213,61 @@ public class ChatbotActivity extends Dialog {
             @Override public void onAnimationEnd(Animation animation) {
                 String newMessage = roomMessages.get(currentMessageIndex);
                 chatText.setText(newMessage);
-                Log.d(TAG, "Set new message: " + newMessage.substring(0, Math.min(50, newMessage.length())));
-
                 Animation fadeIn = AnimationUtils.loadAnimation(context, android.R.anim.fade_in);
                 fadeIn.setDuration(300);
                 chatText.startAnimation(fadeIn);
-
-                new Handler(Looper.getMainLooper()).postDelayed(() -> speakCurrentMessage(), 300);
+                new Handler(Looper.getMainLooper()).postDelayed(ChatbotActivity.this::speakCurrentMessage, 100);
 
                 if (currentMessageIndex == roomMessages.size() - 1) {
                     continueButton.setText("Start Game ▶");
+                } else {
+                    continueButton.setText("Continue ▶");
                 }
             }
 
             @Override public void onAnimationRepeat(Animation animation) {}
         });
-
         chatText.startAnimation(fadeOut);
     }
 
     private void speakCurrentMessage() {
+        if (roomMessages == null || currentMessageIndex >= roomMessages.size()) return;
+
         String message = roomMessages.get(currentMessageIndex);
-        if (textToSpeech != null) {
-            int speakResult = textToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, "chatbotMessage");
-            if (speakResult == TextToSpeech.ERROR) {
-                Log.e(TAG, "Error speaking text");
-                Toast.makeText(context, "Error with text to speech", Toast.LENGTH_SHORT).show();
+        googleTTSHelper.synthesizeSpeech(message, selectedVoiceType, new GoogleTTSHelper.AudioReadyCallback() {
+            @Override
+            public void onAudioReady(byte[] audioData) {
+                Log.d(TAG, "Audio playback started");
             }
-        } else {
-            Toast.makeText(context, "Voice service not available", Toast.LENGTH_SHORT).show();
-        }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(context, "TTS Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "TTS failed", e);
+            }
+
+            @Override
+            public void onPlaybackStarted() {
+                Log.d(TAG, "Playback started");
+            }
+
+            @Override
+            public void onPlaybackCompleted() {
+                Log.d(TAG, "Playback completed");
+                // Mark greeting as spoken after it finishes playing
+                if (currentMessageIndex == 0 && !isGreetingSpoken()) {
+                    setGreetingSpokenFlag();
+                }
+            }
+        });
     }
 
     private void dismissWithAnimation() {
-        if (textToSpeech != null && textToSpeech.isSpeaking()) {
-            textToSpeech.stop();
-        }
-
+        googleTTSHelper.stopPlayback();
         Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
         slideDown.setAnimationListener(new Animation.AnimationListener() {
             @Override public void onAnimationStart(Animation animation) {}
-
-            @Override public void onAnimationEnd(Animation animation) {
-                dismiss();
-            }
+            @Override public void onAnimationEnd(Animation animation) { dismiss(); }
             @Override public void onAnimationRepeat(Animation animation) {}
         });
         dialogContainer.startAnimation(slideDown);
@@ -268,19 +292,13 @@ public class ChatbotActivity extends Dialog {
 
     @Override
     public void dismiss() {
-        if (textToSpeech != null) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-            textToSpeech = null;
-        }
+        googleTTSHelper.release();
         super.dismiss();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (textToSpeech != null && textToSpeech.isSpeaking()) {
-            textToSpeech.stop();
-        }
+        googleTTSHelper.stopPlayback();
     }
 }

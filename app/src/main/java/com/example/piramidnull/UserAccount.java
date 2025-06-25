@@ -48,6 +48,12 @@ public class UserAccount extends AppCompatActivity {
     private static final String TAG = "UserAccount";
     private VoiceManager voiceManager;
 
+    public static final String VOICE_TYPE_CLEOPATRA = "Cleopatra";
+    public static final String VOICE_TYPE_PHARAOH = "Pharaoh";
+
+    public static final String VOICE_ID_FEMALE = "en-GB-Wavenet-F";
+    public static final String VOICE_ID_MALE = "en-GB-Wavenet-D";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,20 +136,33 @@ public class UserAccount extends AppCompatActivity {
         genderSpinner.setAdapter(adapter);
 
         String currentVoice = voiceManager.getCurrentVoiceType();
-        genderSpinner.setSelection("Arthur".equals(currentVoice) ? 2 : 1);
+
+        int selectionIndex = 0;
+        for (int i = 0; i < voiceLabels.length; i++) {
+            if (voiceLabels[i].equalsIgnoreCase(currentVoice)) {
+                selectionIndex = i;
+                break;
+            }
+        }
+        genderSpinner.setSelection(selectionIndex);
 
         genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (pos == 0) return;
                 String label = (String) parent.getItemAtPosition(pos);
-                String voiceId = label.equals("Pharaoh") ? "Arthur" : "Emma";
-                voiceManager.setVoice(voiceId);
+
+                // Set the voice type in VoiceManager
+                voiceManager.setVoiceType(label);
+
                 voiceManager.speak("Hello! I am " + label + ", your voice assistant.");
             }
 
-            @Override public void onNothingSelected(AdapterView<?> parent) {}
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
+
 
     private void setupCreateAccountButton(View root) {
         Button createAccountButton = root.findViewById(R.id.createaccount_button);
@@ -369,18 +388,41 @@ public class UserAccount extends AppCompatActivity {
         isAvatarStep = false;
         inflateOverlayContent(R.layout.createaccount);
     }
-    public static final String VOICE_TYPE_CLEOPATRA = "Cleopatra";
-    public static final String VOICE_TYPE_PHARAOH = "Pharaoh";
     public static String getVoiceIdFromType(String voiceType) {
-        if (voiceType == null) return "en-us-x-iol-local"; // fallback default
+        if (voiceType == null) {
+            return VOICE_ID_FEMALE;
+        }
         switch (voiceType) {
             case VOICE_TYPE_PHARAOH:
-                return "en-us-x-iol-local"; // Male voice ID
+                return VOICE_ID_MALE;
             case VOICE_TYPE_CLEOPATRA:
-                return "en-us-x-iob-local"; // Female voice ID
+                return VOICE_ID_FEMALE;
             default:
-                return "en-us-x-iol-local"; // Default to male voice if unknown
+                return VOICE_ID_FEMALE;
         }
     }
-}
 
+    public static String getVoiceTypeFromId(String voiceId) {
+        if (voiceId == null) {
+            return VOICE_TYPE_CLEOPATRA;
+        }
+        switch (voiceId) {
+            case VOICE_ID_MALE:
+                return VOICE_TYPE_PHARAOH;
+            case VOICE_ID_FEMALE:
+                return VOICE_TYPE_CLEOPATRA;
+            default:
+                return VOICE_TYPE_CLEOPATRA; }
+    }
+
+    /**
+     * Gets available voice types
+     */
+    public static String[] getAvailableVoiceTypes() {
+        return new String[]{VOICE_TYPE_CLEOPATRA, VOICE_TYPE_PHARAOH};
+    }
+
+    public static boolean isValidVoiceType(String voiceType) {
+        return VOICE_TYPE_CLEOPATRA.equals(voiceType) || VOICE_TYPE_PHARAOH.equals(voiceType);
+    }
+}
