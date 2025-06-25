@@ -166,7 +166,7 @@ public class ChatbotActivity extends Dialog {
                     "Take your time to analyze each puzzle carefully. Rushing often leads to mistakes.",
                     "If you get stuck, try approaching the problem from a different angle or perspective.",
                     "Remember: every puzzle has a logical solution. Trust your reasoning and stay focused!",
-                    "You're all set! Good luck solving the puzzles. Tap the X to close and start your challenge!"
+                    "You're all set! Good luck solving the puzzles. Tap the X to close and start your first challenge!"
             ));
             mazeMessages = new ArrayList<>(List.of(
                     "Welcome to the Maze Room! Navigation and spatial awareness are your keys to success here.",
@@ -174,7 +174,7 @@ public class ChatbotActivity extends Dialog {
                     "Look for visual cues like arrows, colored lights, or special markings on the walls.",
                     "Some walls might be illusions or secret passages. Don't be afraid to test boundaries!",
                     "Stay calm and move methodically. Panic and rushing lead to poor decisions in mazes.",
-                    "You're ready to navigate! Remember to stay focused. Tap the X to close and enter the maze!"
+                    "You're ready to navigate! Remember to stay focused. Tap the X to close and explore the maze!"
             ));
             laserMessages = new ArrayList<>(List.of(
                     "Welcome to the Laser Room! Precision, timing, and quick reflexes are everything here.",
@@ -182,7 +182,7 @@ public class ChatbotActivity extends Dialog {
                     "Look for mirrors, crystals, or reflective objects that might redirect laser beams.",
                     "Many lasers have predictable on/off cycles. Study the timing before you move.",
                     "Move slowly and deliberately. One wrong step could trigger alarms or reset your progress!",
-                    "You're prepared for the laser challenge! Stay sharp and move carefully. Tap X to begin!"
+                    "You're prepared for the laser challenge! Stay sharp and move carefully. Tap X and begin!"
             ));
         }
 
@@ -195,6 +195,10 @@ public class ChatbotActivity extends Dialog {
         currentMessageIndex = 0;
         if (roomMessages != null && !roomMessages.isEmpty()) {
             chatText.setText(roomMessages.get(0));
+
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                speakCurrentMessage();
+            }, 50);
         }
     }
 
@@ -219,7 +223,7 @@ public class ChatbotActivity extends Dialog {
                 new Handler(Looper.getMainLooper()).postDelayed(ChatbotActivity.this::speakCurrentMessage, 100);
 
                 if (currentMessageIndex == roomMessages.size() - 1) {
-                    continueButton.setText("Start Game ▶");
+                    continueButton.setText("Start ▶");
                 } else {
                     continueButton.setText("Continue ▶");
                 }
