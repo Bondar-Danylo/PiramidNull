@@ -37,8 +37,8 @@ public class LandingPage extends AppCompatActivity {
 
         // Adding SuperUser for debaging
         dbHelper.insertUser("admin", "admin",
-                "11.01.2001", 1,
-                "avatar_1.png", "background_1.png");
+                1, 1,
+                1);
 
         
         Button loginBtn = findViewById(R.id.loginBtn);
