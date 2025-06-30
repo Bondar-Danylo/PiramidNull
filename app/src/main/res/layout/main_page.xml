@@ -8,7 +8,50 @@
     tools:context=".MainPage"
     android:background="@color/dark_bg">
 
+    <ImageView
+        android:id="@+id/backBtn"
+        android:layout_width="24dp"
+        android:layout_height="33dp"
+        android:src="@drawable/arrow"
+        app:layout_constraintBottom_toTopOf="@+id/slotGrid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.311" />
 
+    <GridLayout
+        android:id="@+id/slotGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:alignmentMode="alignMargins"
+        android:columnCount="3"
+        android:padding="4dp"
+        android:rowCount="1"
+        android:layout_marginTop="200dp"
+        android:rowOrderPreserved="false"
+        app:layout_constraintBottom_toTopOf="@+id/cardGrid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.323" />
+
+    <GridLayout
+        android:id="@+id/cardGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="156dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="7"
+        android:rowCount="3"
+        android:padding="4dp"
+        android:rowOrderPreserved="false"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:layout_width="match_parent"
