@@ -174,18 +174,30 @@ public class MainPage extends AppCompatActivity {
                     if (!event.getResult()) {
                         PlaceholderData restore = placeholders.remove(dragged);
                         if (restore != null) {
+                            // Удаляем плейсхолдер
                             if (restore.placeholderView.getParent() != null) {
                                 restore.parent.removeView(restore.placeholderView);
                             }
+
+                            // Удаляем перетаскиваемую карточку из текущего родителя (если осталась где-то)
                             if (dragged.getParent() != null) {
                                 ((ViewGroup) dragged.getParent()).removeView(dragged);
                             }
+
                             dragged.setLayoutParams(restore.layoutParams);
-                            restore.parent.addView(dragged, restore.index);
+
+                            // Если вернули из слота — всегда возвращаем в cardGrid
+                            if (restore.parent == slotGrid) {
+                                cardGrid.addView(dragged); // просто в конец
+                            } else {
+                                restore.parent.addView(dragged, restore.index); // вернуть в оригинальную позицию
+                            }
+
                             Log.d("DragDebug", "Restored card at index " + restore.index);
                         }
                     }
                     return true;
+
             }
 
             return true;
