@@ -1,11 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="40dp"
-    android:layout_height="70dp"
-    android:layout_columnWeight="1"
-    android:layout_margin="4dp"
-    android:background="@color/white"
+    android:id="@+id/slot"
+    android:layout_width="60dp"
+    android:layout_height="90dp"
+    android:layout_margin="6dp"
+    android:background="@drawable/slot_border"
     android:clickable="true"
-    android:focusable="true">
-
-</FrameLayout>
+    android:focusable="true"
+    android:layout_centerInParent="true"/>

@@ -1,10 +1,8 @@
 package com.example.piramidnull;
 
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,15 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.HashMap;
 
 public class MainPage extends AppCompatActivity {
     GridLayout cardGrid;
     GridLayout slotGrid;
-
-    HashMap<View, ViewGroup> originalParents = new HashMap<>();
-    HashMap<View, PlaceholderData> placeholders = new HashMap<>();
-
     int[] cardDrawables = {
             R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3,
             R.drawable.avatar_4, R.drawable.avatar_5, R.drawable.avatar_6,
@@ -30,6 +25,9 @@ public class MainPage extends AppCompatActivity {
             R.drawable.avatar_4, R.drawable.avatar_5, R.drawable.avatar_6,
             R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3
     };
+
+
+    HashMap<View, ViewGroup> originalParents = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,42 +39,25 @@ public class MainPage extends AppCompatActivity {
 
         addCards();
         addSlots();
+
+        findViewById(android.R.id.content).setOnDragListener(new DragHandler());
     }
 
     private void addCards() {
         for (int i = 0; i < cardDrawables.length; i++) {
-            int drawableId = cardDrawables[i];
             View card = LayoutInflater.from(this).inflate(R.layout.card_item, cardGrid, false);
             ImageView icon = card.findViewById(R.id.card_icon);
-            icon.setImageResource(drawableId);
-
-            card.setTag(i);
+            icon.setImageResource(cardDrawables[i]);
             card.setOnTouchListener(new CardTouchListener());
-
-            cardGrid.addView(card);
             originalParents.put(card, cardGrid);
+            cardGrid.addView(card);
         }
     }
 
     private void addSlots() {
         for (int i = 0; i < 3; i++) {
             View slot = LayoutInflater.from(this).inflate(R.layout.slot_item, slotGrid, false);
-            slot.setOnDragListener(new SlotDragListener());
             slotGrid.addView(slot);
-        }
-    }
-
-    private static class PlaceholderData {
-        ViewGroup parent;
-        int index;
-        ViewGroup.LayoutParams layoutParams;
-        View placeholderView;
-
-        PlaceholderData(ViewGroup parent, int index, ViewGroup.LayoutParams layoutParams, View placeholderView) {
-            this.parent = parent;
-            this.index = index;
-            this.layoutParams = layoutParams;
-            this.placeholderView = placeholderView;
         }
     }
 
@@ -86,121 +67,65 @@ public class MainPage extends AppCompatActivity {
         public boolean onTouch(View view, MotionEvent motionEvent) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDragAndDrop(data, shadowBuilder, view, 0);
-
-                ViewGroup parent = (ViewGroup) view.getParent();
-                if (parent == null) return false;
-
-                int index = parent.indexOfChild(view);
-                ViewGroup.LayoutParams originalParams = view.getLayoutParams();
-
-                View placeholder = new View(MainPage.this);
-                placeholder.setLayoutParams(originalParams);
-                placeholder.setBackgroundColor(0x22CCCCCC);
-
-                parent.removeView(view);
-                parent.addView(placeholder, index);
-
-                placeholders.put(view, new PlaceholderData(parent, index, originalParams, placeholder));
-
+                View.DragShadowBuilder shadow = new View.DragShadowBuilder(view);
+                view.startDragAndDrop(data, shadow, view, 0);
                 return true;
             }
             return false;
         }
     }
 
-    private class SlotDragListener implements View.OnDragListener {
+    private class DragHandler implements View.OnDragListener {
         @Override
-        public boolean onDrag(View target, DragEvent event) {
-            View dragged = (View) event.getLocalState();
-            Log.d("DragDebug", "Event: " + event.getAction() + " on target: " + target.getClass().getSimpleName());
+        public boolean onDrag(View v, DragEvent event) {
+            final View dragged = (View) event.getLocalState();
 
             switch (event.getAction()) {
-                case DragEvent.ACTION_DRAG_STARTED:
-                    return true;
-
                 case DragEvent.ACTION_DROP:
                     if (dragged == null) return false;
 
-                    if (!(target instanceof ViewGroup)) return false;
-                    ViewGroup targetGroup = (ViewGroup) target;
+                    boolean droppedInSlot = false;
 
+                    for (int i = 0; i < slotGrid.getChildCount(); i++) {
+                        View slot = slotGrid.getChildAt(i);
+                        int[] location = new int[2];
+                        slot.getLocationOnScreen(location);
 
+                        float x = event.getX() + ((View) v).getLeft();
+                        float y = event.getY() + ((View) v).getTop();
 
-                    // Удаляем существующую карточку из слота
-                    View existing = targetGroup.getChildAt(0);
+                        if (x >= location[0] && x <= location[0] + slot.getWidth() &&
+                                y >= location[1] && y <= location[1] + slot.getHeight()) {
 
-                    if (existing != null) {
-                        ViewGroup parentOfExisting = (ViewGroup) existing.getParent();
-                        if (parentOfExisting != null) {
-                            parentOfExisting.removeView(existing); // 🔥 удалить из текущего родителя
-                        }
+                            if (slot instanceof ViewGroup) {
+                                ViewGroup vg = (ViewGroup) slot;
 
-                        PlaceholderData existingPlaceholderData = placeholders.get(existing);
-                        if (existingPlaceholderData != null) {
-                            ViewGroup placeholderParent = existingPlaceholderData.parent;
-                            int index = existingPlaceholderData.index;
-                            ViewGroup.LayoutParams layoutParams = existingPlaceholderData.layoutParams;
-                            View placeholderView = existingPlaceholderData.placeholderView;
+                                if (vg.getChildCount() > 0) {
+                                    View oldCard = vg.getChildAt(0);
+                                    vg.removeView(oldCard);
+                                    cardGrid.addView(oldCard);
+                                }
 
-                            if (placeholderParent != null && placeholderView != null) {
-                                placeholderParent.removeView(placeholderView);
+                                ViewGroup parent = (ViewGroup) dragged.getParent();
+                                if (parent != null) parent.removeView(dragged);
+                                vg.addView(dragged);
+                                droppedInSlot = true;
+                                break;
                             }
-
-                            existing.setLayoutParams(layoutParams);
-                            if (placeholderParent != null) {
-                                placeholderParent.addView(existing, index);
-                            } else {
-                                cardGrid.addView(existing);
-                            }
-
-                            placeholders.remove(existing);
-                        } else {
-                            ViewGroup original = originalParents.getOrDefault(existing, cardGrid);
-                            original.addView(existing); // здесь тоже безопасно после removeView
                         }
                     }
 
-
-
-                    targetGroup.addView(dragged);
-                    dragged.setVisibility(View.VISIBLE);
-                    return true;
-
-                case DragEvent.ACTION_DRAG_ENDED:
-                    if (dragged == null) return false;
-
-                    if (!event.getResult()) {
-                        PlaceholderData restore = placeholders.remove(dragged);
-                        if (restore != null) {
-                            // Удаляем плейсхолдер
-                            if (restore.placeholderView.getParent() != null) {
-                                restore.parent.removeView(restore.placeholderView);
-                            }
-
-                            // Удаляем перетаскиваемую карточку из текущего родителя (если осталась где-то)
-                            if (dragged.getParent() != null) {
-                                ((ViewGroup) dragged.getParent()).removeView(dragged);
-                            }
-
-                            dragged.setLayoutParams(restore.layoutParams);
-
-                            // Если вернули из слота — всегда возвращаем в cardGrid
-                            if (restore.parent == slotGrid) {
-                                cardGrid.addView(dragged); // просто в конец
-                            } else {
-                                restore.parent.addView(dragged, restore.index); // вернуть в оригинальную позицию
-                            }
-
-                            Log.d("DragDebug", "Restored card at index " + restore.index);
-                        }
+                    if (!droppedInSlot) {
+                        ViewGroup parent = (ViewGroup) dragged.getParent();
+                        if (parent != null) parent.removeView(dragged);
+                        ViewGroup original = originalParents.get(dragged);
+                        if (original != null) original.addView(dragged);
                     }
-                    return true;
 
+                    return true;
             }
-
             return true;
         }
+
     }
 }
