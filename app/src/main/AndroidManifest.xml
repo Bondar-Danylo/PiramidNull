@@ -19,7 +19,7 @@
             android:name=".Main"
             android:exported="false" />
         <activity
-            android:name=".MainPage"
+            android:name=".HieroglyphsPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

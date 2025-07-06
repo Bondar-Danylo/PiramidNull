@@ -25,4 +25,6 @@
     </string-array>
     <string name="createYourAvatar">Create Your Avatar</string>
     <string name="Hieroglyph">The Hieroglyphs</string>
+    <string name="popup_text">"Use the tools at your disposal to drag and place the glyphs into the empty spaces. With patience and the right sequence, the ancient message carved into the table will begin to reveal its meaning."</string>
+
 </resources>

@@ -45,7 +45,7 @@ public class LoginPage extends AppCompatActivity {
             if(dbHelper.checkUser(username.getText().toString(), password.getText().toString())) {
                 User user = dbHelper.getUserByCredentials(username.getText().toString(), password.getText().toString());
                 SessionManager.getInstance().setUser(user);
-                startActivity(new Intent(LoginPage.this, MainPage.class));
+                startActivity(new Intent(LoginPage.this, HieroglyphsPage.class));
             }else {
                 Toast.makeText(LoginPage.this, "Error! \nPlease check your username or password", Toast.LENGTH_LONG).show();
             }

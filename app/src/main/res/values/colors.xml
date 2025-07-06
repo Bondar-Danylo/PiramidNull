@@ -7,5 +7,9 @@
     <color name="main_blue">#68C5E0</color>
     <color name="sand">#FAD681</color>
     <color name="dark_gold">#BF8B41</color>
+    <color name="green">#3CEB57</color>
+    <color name="red">#FA2626</color>
+    <color name="blue_border">#86cee2</color>
+    <color name="grey">#828282</color>
 
 </resources>

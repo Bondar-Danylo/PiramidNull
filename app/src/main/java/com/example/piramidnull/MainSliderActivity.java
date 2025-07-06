@@ -47,7 +47,7 @@ public class MainSliderActivity extends AppCompatActivity {
                     startActivity(new Intent(MainSliderActivity.this, UserAccount.class));
                     break;
                 case 2:
-                    startActivity(new Intent(MainSliderActivity.this, MainPage.class));
+                    startActivity(new Intent(MainSliderActivity.this, HieroglyphsPage.class));
                     break;
                 case 3:
                     startActivity(new Intent(MainSliderActivity.this, Main.class));
