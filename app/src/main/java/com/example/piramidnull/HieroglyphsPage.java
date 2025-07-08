@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -30,11 +31,11 @@ public class HieroglyphsPage extends AppCompatActivity {
     GridLayout slotGrid;
 
     int[] cardDrawables = {
-            R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3,
-            R.drawable.avatar_4, R.drawable.avatar_5, R.drawable.avatar_6,
-            R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3,
-            R.drawable.avatar_4, R.drawable.avatar_5, R.drawable.avatar_6,
-            R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3
+           R.drawable.hieroglyph_a, R.drawable.hieroglyph_b, R.drawable.hieroglyph_c,
+            R.drawable.hieroglyph_d, R.drawable.hieroglyph_e, R.drawable.hieroglyph_f,
+            R.drawable.hieroglyph_i, R.drawable.hieroglyph_n, R.drawable.hieroglyph_p,
+            R.drawable.hieroglyph_r, R.drawable.hieroglyph_t, R.drawable.hieroglyph_u,
+            R.drawable.hieroglyph_v, R.drawable.hieroglyph_y, R.drawable.hieroglyph_z
     };
 
     HashMap<View, ViewGroup> originalParents = new HashMap<>();
@@ -50,9 +51,9 @@ public class HieroglyphsPage extends AppCompatActivity {
         cardGrid = findViewById(R.id.cardGrid);
         slotGrid = findViewById(R.id.slotGrid);
 
-        correctAssignments.put(2, 0); // 3rd image in 1st slot
-        correctAssignments.put(4, 1); // 5th image in 2nd slot
-        correctAssignments.put(6, 2); // 7th image in 3rd slot
+        correctAssignments.put(9, 0); // 3rd image in 1st slot
+        correctAssignments.put(11, 1); // 5th image in 2nd slot
+        correctAssignments.put(7, 2); // 7th image in 3rd slot
 
         addCards();
         addSlots();
@@ -98,6 +99,14 @@ public class HieroglyphsPage extends AppCompatActivity {
             View card = LayoutInflater.from(this).inflate(R.layout.card_item, cardGrid, false);
             ImageView icon = card.findViewById(R.id.card_icon);
             icon.setImageResource(cardDrawables[i]);
+
+            TextView label = card.findViewById(R.id.card_letter);
+            String resName = getResources().getResourceEntryName(cardDrawables[i]);
+            if (resName.contains("_")) {
+                String letter = resName.substring(resName.lastIndexOf("_") + 1);
+                label.setText(letter.toUpperCase());
+            }
+
             card.setOnTouchListener(new CardTouchListener());
 
             card.setTag(i);
