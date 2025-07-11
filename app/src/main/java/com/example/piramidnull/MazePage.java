@@ -1,9 +1,14 @@
 package com.example.piramidnull;
 
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.DragEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -31,11 +36,22 @@ public class MazePage extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_maze_page);
 
+        ImageView backBtn = (ImageView) findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MazePage.this, MainPage.class);
+                startActivity(intent);
+            }
+        });
+
+
         FrameLayout mapOutlines = findViewById(R.id.mapOutlines);
 
         ImageView undoBtn = (ImageView)findViewById(R.id.undoBtn);
         ImageView redBtn = (ImageView) findViewById(R.id.redBtn);
         ImageView greenBtn = (ImageView) findViewById(R.id.greenBtn);
+        ImageView hintBtn = (ImageView) findViewById(R.id.hintBtn);
 
         redBtn.setTag(R.drawable.redmark);
         greenBtn.setTag(R.drawable.check);
@@ -53,6 +69,31 @@ public class MazePage extends AppCompatActivity {
                 }
             }
         });
+
+
+        hintBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LayoutInflater inflater = getLayoutInflater();
+                View popupHint = inflater.inflate(R.layout.popup_hint_maze, null);
+
+                final Dialog dialog = new Dialog(MazePage.this);
+                dialog.setContentView(popupHint);
+                dialog.setCancelable(true);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+
+                ImageView closeHintBtn = popupHint.findViewById(R.id.closeHintBtn);
+                closeHintBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
 
         mapOutlines.setOnDragListener(new View.OnDragListener() {
             @Override
