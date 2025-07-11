@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/undoBtn"
+        android:title="Undo"
+        android:icon="@drawable/arrow_left"/>
+    <item android:id="@+id/redBtn"
+        android:title="Wrong Path"
+        android:icon="@drawable/arrow_left"/>
+    <item android:id="@+id/greenBtn"
+        android:title="Right Path"
+        android:icon="@drawable/arrow_left"/>
+</menu>

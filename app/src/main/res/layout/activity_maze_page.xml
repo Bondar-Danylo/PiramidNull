@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/dark_bg"
+    tools:context=".MazePage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:id="@+id/topNav">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maze Room"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/sandT" />
+
+        <ImageView
+            android:id="@+id/arrowLeftBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/arrow_left" />
+
+    </RelativeLayout>
+
+<!--    <TextView-->
+<!--        android:id="@+id/roomTitle"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="The Maze"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textColor="@color/sand"-->
+<!--        android:textSize="25sp" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/mapOutlines">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/map_maze" />
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/mapContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3">
+
+            <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_alignParentBottom="true"-->
+            <!--            app:menu="@menu/maze_bottom_nav"-->
+            <!--            android:id="@+id/mazeBottomNav"/>-->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:id="@+id/iconContainer">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:background="@drawable/bg_box_sand"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tools"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="15dp"
+                            android:textColor="@color/sand"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/check"
+                            android:layout_margin="5dp"
+                            android:padding="9dp"
+                            android:background="@drawable/bg_btn_maze"
+                            android:id="@+id/greenBtn"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/redmark"
+                            android:background="@drawable/bg_btn_maze"
+                            android:layout_margin="5dp"
+                            android:padding="9dp"
+                            android:id="@+id/redBtn"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/undo"
+                            android:padding="9dp"
+                            android:id="@+id/undoBtn"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/lightbulb"
+                            android:layout_marginBottom="15dp"
+                            android:padding="9dp"
+                            android:id="@+id/hintBtn"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </FrameLayout>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
