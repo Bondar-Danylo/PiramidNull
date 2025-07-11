@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,12 +37,43 @@ public class MazePage extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_maze_page);
 
+        //Back to the main Page
         ImageView backBtn = (ImageView) findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MazePage.this, MainPage.class);
                 startActivity(intent);
+            }
+        });
+
+        //Guide Bot
+        ImageView guideBtn = (ImageView)findViewById(R.id.guideBtn);
+        LinearLayout guideBubble = (LinearLayout) findViewById(R.id.guideBubble);
+        LinearLayout guideBubble2 = (LinearLayout)findViewById(R.id.guideBubble2);
+        Button continueBtn = (Button) findViewById(R.id.continueBtn);
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guideBubble.setVisibility(View.GONE);
+                guideBubble2.setVisibility(View.VISIBLE);
+            }
+        });
+
+        guideBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(guideBubble2.getVisibility()==View.VISIBLE){
+                    guideBubble2.setVisibility(View.GONE);
+                }
+                else if(guideBubble.getVisibility()==View.VISIBLE){
+                    guideBubble2.setVisibility(View.VISIBLE);
+                    guideBubble.setVisibility(View.GONE);
+                }
+                else{
+                    guideBubble.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -59,6 +91,7 @@ public class MazePage extends AppCompatActivity {
         setDragTouchListener(redBtn);
         setDragTouchListener(greenBtn);
 
+        //remove icons one by one
         undoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +103,7 @@ public class MazePage extends AppCompatActivity {
             }
         });
 
-
+        //hint button and pop up box
         hintBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +127,7 @@ public class MazePage extends AppCompatActivity {
             }
         });
 
-
+        //Drag and drop icons
         mapOutlines.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
