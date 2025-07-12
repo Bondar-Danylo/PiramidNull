@@ -24,6 +24,10 @@ public class ObjectPage extends AppCompatActivity {
         ImageView objectImage = findViewById(R.id.object_image);
         TextView objectName = findViewById(R.id.object_name);
         TextView objectStory = findViewById(R.id.object_story);
+        TextView objectFound = findViewById(R.id.object_found);
+        TextView objectOrigin = findViewById(R.id.object_origin);
+        TextView objectDate = findViewById(R.id.object_date);
+        TextView objectFunction = findViewById(R.id.object_function);
 
         // getting the data that we need to fill into the views
         Bundle extras = getIntent().getExtras();
@@ -34,11 +38,19 @@ public class ObjectPage extends AppCompatActivity {
             String size = extras.getString("object_size");
             int imageResId = extras.getInt("object_image");
             String story = extras.getString("object_story");
+            String found = extras.getString("object_found");
+            String origin = extras.getString("object_origin");
+            String date = extras.getString("object_date");
+            String function = extras.getString("object_function");
 
             //after getting it we use it/place it
             objectName.setText(name);
             objectImage.setImageResource(imageResId);
             objectStory.setText(story);
+            objectFound.setText(found);
+            objectOrigin.setText(origin);
+            objectDate.setText(date);
+            objectFunction.setText(function);
 
         }
 

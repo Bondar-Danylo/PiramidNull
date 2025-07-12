@@ -23,8 +23,8 @@ import java.util.List;
 public class FragmentObjects extends Fragment {
 
     List<ObjectData> objectList = Arrays.asList(
-            new ObjectData("Portal", "OB12-1", "Gold", "55 x 100 cm", R.drawable.avatar1, "Once upon a time ..."),
-            new ObjectData("Mirror", "OB13-2", "Bronze", "45 x 80 cm", R.drawable.redmark, "Once upon a time ...")
+            new ObjectData("Portal", "OB12-1", "Gold", "55 x 100 cm", R.drawable.avatar1, "Once upon a time ...", "Tomb", "Ancient Egypt", "10-10-10", "Unknown"),
+            new ObjectData("Mirror", "OB13-2", "Bronze", "45 x 80 cm", R.drawable.redmark, "Once upon a time ...", "Egypt", "London", "30-30-20", "unknown")
     );
 
     @Override
@@ -54,6 +54,10 @@ public class FragmentObjects extends Fragment {
                         intent.putExtra("object_size", obj.size);
                         intent.putExtra("object_image", obj.imageResId);
                         intent.putExtra("object_story", obj.story);
+                        intent.putExtra("object_found",obj.found);
+                        intent.putExtra("object_origin",obj.origin);
+                        intent.putExtra("object_date",obj.date);
+                        intent.putExtra("object_function",obj.function);
                         startActivity(intent);
                     }
                 });
@@ -79,14 +83,22 @@ public class FragmentObjects extends Fragment {
         String size;
         int imageResId;
         String story;
+        String found;
+        String origin;
+        String date;
+        String function;
 
-        public ObjectData(String title, String objectNumber, String material, String size, int imageResId, String story) {
+        public ObjectData(String title, String objectNumber, String material, String size, int imageResId, String story, String found, String origin, String date, String function) {
             this.title = title;
             this.objectNumber = objectNumber;
             this.material = material;
             this.size = size;
             this.imageResId = imageResId;
             this.story = story;
+            this.found = found;
+            this.origin = origin;
+            this.date = date;
+            this.function = function;
         }
     }
 }
