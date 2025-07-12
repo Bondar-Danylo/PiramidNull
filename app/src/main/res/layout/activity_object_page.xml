@@ -11,10 +11,9 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/avatar1"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="70dp"
-        android:id="@+id/objectImage"/>
+        android:id="@+id/object_image"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,7 +36,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Eye of Toth"
                     android:textAlignment="center"
                     android:fontFamily="@font/handwritten"
                     android:textStyle="bold"
@@ -45,7 +43,7 @@
                     android:padding="10dp"
                     android:textColor="@color/sand"
                     android:layout_marginBottom="20dp"
-                    android:id="@+id/objectTitle"/>
+                    android:id="@+id/object_name"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -191,12 +189,12 @@
                         android:background="@drawable/textbox"
                         android:padding="5dp"
                         android:paddingStart="10dp"
-                        android:text="Recovered obsidian orb initially mistaken for a ceremonial amulet. However, under UV light, its surface revealed intricate micro-etchings. Roughly the size of a walnut, but unnaturally heavy—approximately 3.4 kg. Surface appears to be black opal, yet under magnification no crystalline structure is evident. Internal light shifts in spirals when unobserved. When stared at directly, the light ceases all movement, as if aware. Despite its nickname, it resembles no anatomical eye. Yet all witnesses refer to it as such, even when given alternate descriptions beforehand. This may indicate memetic influence."
                         android:fontFamily="@font/handwritten"
                         android:textSize="20dp"
                         android:letterSpacing="0.02"
                         android:textColor="@color/sand"
-                        android:paddingBottom="7dp"/>
+                        android:paddingBottom="7dp"
+                        android:id="@+id/object_story"/>
 
                 </LinearLayout>
 

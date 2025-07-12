@@ -59,7 +59,8 @@ public class DynamicNotesFragment extends Fragment {
         titleTextView.setText(contentData.getTitle());
         contentTextView.setText(contentData.getContent());
         fieldNoteNu.setText(contentData.getNumber());
-        dateTextView.setText(contentData.getDate());}
+        dateTextView.setText(contentData.getDate());
+    }
 
     private ContentData getContentForPosition(int position){
         switch (position){
