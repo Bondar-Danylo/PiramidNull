@@ -1,0 +1,182 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+
+    android:padding="16dp">
+
+    <!-- Scrollable content -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/navigation">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Top bar -->
+            <RelativeLayout
+                android:layout_marginTop="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/arrow"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:id="@+id/titleText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile"
+                    android:textSize="20sp"
+                    android:textColor="#FFD700"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignTop="@id/backArrow" />
+
+                <ImageView
+                    android:id="@+id/settingsIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/settings"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <!-- Avatar -->
+            <LinearLayout
+                android:id="@+id/avatarSection"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/avatarImage"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@drawable/background_48"
+                    android:src="@drawable/avatar_84"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Avatar"
+                    android:textColor="#FFD700"
+                    android:layout_marginTop="8dp" />
+            </LinearLayout>
+
+            <!-- Info Section -->
+            <LinearLayout
+                android:id="@+id/infoSection"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
+
+                <EditText
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Username"
+                    android:background="@drawable/square_with_rounded_corners"
+                    android:textColor="#fff"
+                    android:textColorHint="#FFD700"
+                    android:padding="12dp"
+                    android:layout_marginBottom="20dp" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:background="@drawable/square_with_rounded_corners"
+                    android:textColor="#fff"
+                    android:textColorHint="#FFD700"
+                    android:padding="12dp"
+                    android:layout_marginBottom="20dp" />
+
+                <EditText
+                    android:id="@+id/birthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Password"
+                    android:background="@drawable/square_with_rounded_corners"
+                    android:textColor="#fff"
+                    android:textColorHint="#FFD700"
+                    android:padding="12dp"
+                    android:layout_marginBottom="20dp" />
+
+                <Button
+                    android:id="@+id/editProfileBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Edit Profile"
+                    android:backgroundTint="#90CAF9"
+                    android:textColor="#000" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/logOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Log Out"
+                android:textColor="#FFD700"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Navigation -->
+    <LinearLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/navigation"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/navigation_notes"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/notes"
+            android:contentDescription="@string/notesDescription" />
+
+        <ImageView
+            android:id="@+id/navigation_profile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/profile"
+            android:contentDescription="@string/profileDescription" />
+
+        <ImageView
+            android:id="@+id/navigation_main"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/main"
+            android:contentDescription="@string/mainDescription" />
+
+        <ImageView
+            android:id="@+id/navigation_bio"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/scroll_img"
+            android:contentDescription="@string/bioDescription" />
+    </LinearLayout>
+</RelativeLayout>
+
+

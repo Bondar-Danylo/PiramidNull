@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".Biography">
+
+
+    <ImageView
+        android:id="@+id/backArrow"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/arrow"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/biography"
+        android:textSize="20sp"
+        android:textColor="#FFD700"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/backArrow"
+        tools:ignore="RelativeOverlap" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/navigation"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/scroll_img"
+        android:contentDescription="@string/todo2" />
+
+    <ImageView
+        android:layout_width="113dp"
+        android:layout_height="180dp"
+
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="107dp"
+        android:layout_marginEnd="69dp"
+        android:background="@drawable/professor"
+        android:contentDescription="@string/todo3" />
+
+    <LinearLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/navigation"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/navigation_notes"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/notes"
+            android:contentDescription="@string/notesDescription" />
+
+        <ImageView
+            android:id="@+id/navigation_profile"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/profile"
+            android:contentDescription="@string/profileDescription" />
+
+        <ImageView
+            android:id="@+id/navigation_main"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/main"
+            android:contentDescription="@string/mainDescription" />
+
+        <ImageView
+            android:id="@+id/navigation_bio"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:src="@drawable/scroll_img"
+            android:contentDescription="@string/bioDescription" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="216dp"
+        android:layout_height="525dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="97dp"
+        android:layout_marginEnd="119dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="152dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dr_alan_robweilzer" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:text="@string/dob" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="103dp"
+            android:layout_height="wrap_content"
+            android:text="@string/_10_03_1964" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="91dp"
+            android:layout_height="wrap_content"
+            android:text="@string/experience" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            android:text="@string/archaeologist" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:text="@string/professor_of_archeology_of_oxford_university_10years" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:text="@string/specialisation" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:text="@string/anciebt_languages" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="124dp"
+            android:layout_height="wrap_content"
+            android:text="@string/current_possition" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:text="@string/researcher_for_the_egyption_antiquities_authority_in_egypt" />
+    </LinearLayout>
+
+
+</RelativeLayout>

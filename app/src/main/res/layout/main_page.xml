@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/scroll"
+            android:src="@drawable/scroll_img"
             android:contentDescription="@string/bioDescription"/>
     </LinearLayout>
 
