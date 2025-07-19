@@ -30,7 +30,7 @@
                     android:layout_height="20dp"
                     android:layout_margin="20dp"
                     android:textAlignment="center"
-                    android:text="Results: 4 / 4"
+                    android:text="Results: 3 / 3"
                     android:textColor="@color/sand"
                     android:layout_alignParentBottom="true"
                     android:id="@+id/numOfResults"/>

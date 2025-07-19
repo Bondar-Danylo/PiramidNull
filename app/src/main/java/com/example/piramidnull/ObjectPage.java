@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -15,11 +16,15 @@ import androidx.core.view.WindowInsetsCompat;
 public class ObjectPage extends AppCompatActivity {
     ImageView arrowLeft;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_object_page);
+
+
 
         ImageView objectImage = findViewById(R.id.object_image);
         TextView objectName = findViewById(R.id.object_name);

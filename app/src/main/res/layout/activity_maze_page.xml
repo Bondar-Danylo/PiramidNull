@@ -151,14 +151,7 @@
             </RelativeLayout>
 
         </LinearLayout>
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/speech_bubble"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:visibility="gone"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            android:id="@+id/guideImage"/>-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,6 +160,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="70dp"
             android:padding="30dp"
+            android:gravity="center"
             android:visibility="gone"
             android:id="@+id/guideBubble">
                 <TextView
@@ -177,21 +171,131 @@
                     android:layout_marginTop="50dp"
                     android:lineHeight="23dp"
                     android:text="You have discovered a rough sketch of the maze. Use the tools to guide you through the maze."/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/sand"
-                    android:lineHeight="23dp"
-                    android:text="And if you find yourself truly lost... a hint might just point you in the right direction."/>
 
-                <Button
+                <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Continue"
+                        android:layout_alignParentEnd="true"
+                        android:backgroundTint="@color/light_bg"
+                        android:textColor="@color/sand"
+                        android:id="@+id/continueBtn"/>
+                </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/speech_bubble"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="70dp"
+            android:padding="30dp"
+            android:visibility="gone"
+            android:id="@+id/guideBubble2">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:padding="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:id="@+id/maze_part"
+                android:src="@drawable/maze_part"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drag and drop to mark dead ends or the right path."
+                android:textColor="@color/sand"
+                android:id="@+id/instructionText"
+                android:layout_marginBottom="20dp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Continue"
-                    android:textAlignment="viewEnd"
-                    android:backgroundTint="@color/light_bg"
-                    android:textColor="@color/sand"
-                    android:id="@+id/continueBtn"/>
+                    android:src="@drawable/redmark"
+                    android:background="@drawable/bg_btn_maze"
+                    android:layout_below="@+id/instructionText"
+                    android:padding="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="3dp"
+                    android:id="@+id/redmarkIcon"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/redmark"
+                    android:layout_marginLeft="200dp"
+                    android:layout_alignTop="@+id/redmarkIcon"
+                    android:padding="8dp"
+                    android:visibility="gone"
+                    android:id="@+id/placedRedmark"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/check"
+                android:layout_marginLeft="200dp"
+                android:layout_alignTop="@+id/checkIcon"
+                android:padding="8dp"
+                android:visibility="gone"
+                android:id="@+id/placedCheck"/>
+
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/check"
+                    android:background="@drawable/bg_btn_maze"
+                    android:padding="8dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_below="@id/redmarkIcon"
+                    android:id="@+id/checkIcon"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/pointer_icon"
+                    android:layout_below="@id/redmarkIcon"
+                    android:layout_marginTop="-30dp"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/pointerIcon"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pointer_icon"
+                android:layout_below="@id/checkIcon"
+                android:layout_marginTop="-20dp"
+                android:layout_marginLeft="20dp"
+                android:visibility="gone"
+                android:id="@+id/pointerIcon2"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/maze_part"
+                android:layout_marginBottom="30dp"
+                android:text="Continue"
+                android:backgroundTint="@color/light_bg"
+                android:textColor="@color/sand"
+                android:id="@+id/nextBtn"/>
+
+        </RelativeLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -201,84 +305,62 @@
             android:background="@drawable/speech_bubble"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="70dp"
-            android:visibility="gone"
             android:padding="30dp"
-            android:id="@+id/guideBubble2">
+            android:visibility="gone"
+            android:gravity="center"
+            android:id="@+id/guideBubble3">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="40dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp"
+                android:paddingBottom="10dp">
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/redmark"/>
+                    android:src="@drawable/undo" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/sand"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="20dp"
                     android:lineHeight="23dp"
-                    android:text="Use red markers by dragging and dropping to track the dead ends."/>
+                    android:text="If you made a mistake, use the undo button."
+                    android:textColor="@color/sand" />
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/check"/>
+                android:orientation="horizontal"
+                android:paddingBottom="30dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/sand"
-                android:layout_marginBottom="15dp"
-                android:lineHeight="23dp"
-                android:text="Use green check marks by dragging and dropping to mark the right path."/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/lightbulb" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineHeight="23dp"
+                    android:paddingBottom="15dp"
+                    android:text="If you really can't find your way out, the hint points you in the right direction."
+                    android:textColor="@color/sand" />
+            </LinearLayout>
+
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/undo"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/sand"
-                android:lineHeight="23dp"
-                android:layout_marginBottom="20dp"
-                android:text="If you made a mistake, use the undo button."/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="30dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/lightbulb"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/sand"
-                android:lineHeight="23dp"
-                android:paddingBottom="15dp"
-                android:text="If you really can't find your way out, the hint points you in the right direction."/>
-        </LinearLayout>
-        </LinearLayout>
+
+
+
     </RelativeLayout>
+
+
 
 
 

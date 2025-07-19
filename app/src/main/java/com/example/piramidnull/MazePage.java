@@ -1,18 +1,23 @@
 package com.example.piramidnull;
 
+import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,6 +35,10 @@ import com.google.android.material.navigation.NavigationBarView;
 
 
 public class MazePage extends AppCompatActivity {
+
+    //animation for instructions
+    ImageView pointer;
+    ImageView redmark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,29 +60,105 @@ public class MazePage extends AppCompatActivity {
         ImageView guideBtn = (ImageView)findViewById(R.id.guideBtn);
         LinearLayout guideBubble = (LinearLayout) findViewById(R.id.guideBubble);
         LinearLayout guideBubble2 = (LinearLayout)findViewById(R.id.guideBubble2);
+        LinearLayout guideBubble3 = (LinearLayout)findViewById(R.id.guideBubble3);
         Button continueBtn = (Button) findViewById(R.id.continueBtn);
+        Button nextBtn = (Button) findViewById(R.id.nextBtn);
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 guideBubble.setVisibility(View.GONE);
                 guideBubble2.setVisibility(View.VISIBLE);
+
+                //icons for the instructions of the maze
+                pointer = (ImageView) findViewById(R.id.pointerIcon);
+                redmark = (ImageView) findViewById(R.id.redmarkIcon);
+                ImageView check = (ImageView) findViewById(R.id.checkIcon);
+                ImageView placedRedmark = (ImageView) findViewById(R.id.placedRedmark);
+                ImageView pointer2 = (ImageView) findViewById(R.id.pointerIcon2);
+                ImageView placedCheck = (ImageView) findViewById(R.id.placedCheck);
+
+
+                Animation animation = AnimationUtils.loadAnimation(MazePage.this, R.anim.instruction_maze_animation);
+                redmark.startAnimation(animation);
+
+                placedRedmark.setVisibility(View.GONE);
+                placedCheck.setVisibility(View.GONE);
+
+                //pointers animation
+                Animation animation2 = AnimationUtils.loadAnimation(MazePage.this, R.anim.pointer_animation);
+                Animation animation3 = AnimationUtils.loadAnimation(MazePage.this, R.anim.pointer_animation);
+
+                pointer.startAnimation(animation2);
+
+                animation2.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        pointer2.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        pointer.setVisibility(View.GONE);
+                        pointer.clearAnimation();
+
+//
+                        pointer2.startAnimation(animation3);
+                        placedRedmark.setVisibility(View.VISIBLE);
+                        check.startAnimation(animation3);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+                animation3.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        pointer2.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                        pointer2.setVisibility(View.GONE);
+                        pointer2.clearAnimation();
+                        placedCheck.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
             }
         });
 
+        //last bubble
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                guideBubble2.setVisibility(View.GONE);
+                guideBubble3.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //guidebot
         guideBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(guideBubble2.getVisibility()==View.VISIBLE){
-                    guideBubble2.setVisibility(View.GONE);
-                }
-                else if(guideBubble.getVisibility()==View.VISIBLE){
-                    guideBubble2.setVisibility(View.VISIBLE);
-                    guideBubble.setVisibility(View.GONE);
-                }
-                else{
+                if(guideBubble.getVisibility()==View.GONE && guideBubble2.getVisibility()==View.GONE && guideBubble3.getVisibility()==View.GONE){
                     guideBubble.setVisibility(View.VISIBLE);
                 }
+                else if(guideBubble3.getVisibility()==View.VISIBLE){
+                    guideBubble3.setVisibility(View.GONE);
+                }
+
+//                if(guideBubble.getVisibility()==View.GONE){
+//                    guideBubble.setVisibility(View.VISIBLE);
+//                }
             }
         });
 
@@ -115,6 +200,7 @@ public class MazePage extends AppCompatActivity {
                 dialog.setContentView(popupHint);
                 dialog.setCancelable(true);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
                 dialog.show();
 
                 ImageView closeHintBtn = popupHint.findViewById(R.id.closeHintBtn);
@@ -126,6 +212,8 @@ public class MazePage extends AppCompatActivity {
                 });
             }
         });
+
+
 
         //Drag and drop icons
         mapOutlines.setOnDragListener(new View.OnDragListener() {
@@ -173,5 +261,8 @@ public class MazePage extends AppCompatActivity {
                 return false;
             }
         });
+
+
+
     }
 }

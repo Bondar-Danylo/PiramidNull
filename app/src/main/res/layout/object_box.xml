@@ -35,7 +35,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ITEM:"
+                    android:textAllCaps="true"
+                    android:text="Artefact:"
                     android:textColor="@color/sandT"
                     android:layout_marginRight="15dp"/>
 
@@ -57,6 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAllCaps="true"
                     android:text="OBJECT#:"
                     android:textColor="@color/sandT"
                     android:layout_marginRight="15dp"/>
@@ -79,7 +81,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MATERIAL:"
+                    android:text="Type:"
+                    android:textAllCaps="true"
                     android:textColor="@color/sandT"
                     android:layout_marginRight="15dp"/>
 
@@ -101,6 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SIZE:"
+                    android:textAllCaps="true"
                     android:textColor="@color/sandT"
                     android:paddingBottom="7dp"
                     android:layout_marginRight="15dp">
