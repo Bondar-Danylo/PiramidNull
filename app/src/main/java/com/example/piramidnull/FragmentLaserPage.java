@@ -82,25 +82,25 @@ public class FragmentLaserPage extends Fragment {
                 return new allContent(
                         "Tip 1",
                         "'Align the laser with the jar to reach your final goal.'",
-                        R.drawable.artefact_bird
+                        R.drawable.canopy
                 );
             case 1:
                 return new allContent(
                         "Tip 2",
                         "'Use the jar to align the laser and complete your objective.'",
-                        R.drawable.artefact_eye
+                        R.drawable.canopy
                 );
             case 2:
                 return new allContent(
                         "Tip 3",
                         "'To achieve your goal, use the jar to guide the laser.'",
-                        R.drawable.artefact_triangle
+                        R.drawable.canopy
                 );
             default:
                 return new allContent(
                         "Tip 1",
                         "'Align the laser with the jar to reach your final goal.'",
-                        R.drawable.artefact_bird
+                        R.drawable.canopy
                 );
         }
     }

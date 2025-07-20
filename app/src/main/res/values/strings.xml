@@ -20,4 +20,33 @@
     <string name="bioDescription">Navigation Biography Icon</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    laser page-->
+    <string name="laserPageTitle">Laser Room</string>
+    <!--    maze page-->
+    <string name="mazePageTitle">Maze Room</string>
+    <string name="mazeToolBox">Tools</string>
+    <string name="mazeGuide1">You have discovered a rough sketch of the maze. Use the tools to guide you through the maze.</string>
+    <string name="continueBtn">Continue</string>
+    <string name="mazeGuide2">Drag and drop to mark dead ends or the right path.</string>
+    <string name="mazeGuide3_undo">If you made a mistake, use the undo button.</string>
+    <string name="mazeGuide3_hint">If you really can not find your way out, the hint points you in the right direction.</string>
+    <!--    findings page-->
+    <string name="findingsPageTitle">Research Findings</string>
+    <string name="objectsBtn">Artefacts</string>
+    <string name="notesBtn">Field Notes</string>
+    <string name="category1">Found: </string>
+    <string name="category2">Origin: </string>
+    <string name="category3">Date: </string>
+    <string name="category4">Function: </string>
+    <string name="category5">Story: </string>
+    <string name="boxCategory1">Artefact: </string>
+    <string name="boxCategory2">Object#: </string>
+    <string name="boxCategory3">Type: </string>
+    <string name="boxCategory4">Size: </string>
+
+
+
+
+
+
 </resources>

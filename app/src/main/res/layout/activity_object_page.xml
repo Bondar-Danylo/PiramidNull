@@ -9,43 +9,43 @@
     tools:context=".ObjectPage">
 
     <ImageView
+        android:id="@+id/object_image"
         android:layout_width="match_parent"
         android:layout_height="260dp"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="70dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:id="@+id/object_image"/>
+        android:paddingRight="10dp" />
 
     <ScrollView
+        android:id="@+id/scrollContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollContainer">
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/objectDetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="350dp"
                 android:background="@drawable/object_border_half"
                 android:orientation="vertical"
-                android:layout_marginTop="350dp"
-                android:padding="20dp"
-                android:id="@+id/objectDetails">
+                android:padding="20dp">
 
                 <TextView
+                    android:id="@+id/object_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:fontFamily="@font/handwritten"
-                    android:textStyle="bold"
-                    android:textSize="30dp"
-                    android:padding="10dp"
-                    android:textColor="@color/sand"
                     android:layout_marginBottom="20dp"
-                    android:id="@+id/object_name"/>
+                    android:fontFamily="@font/handwritten"
+                    android:padding="10dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/sand"
+                    android:textSize="30dp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,183 +57,137 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="FOUND:"
-                        android:textColor="@color/sandT"
-                        android:layout_marginRight="15dp"/>
+                        android:text="@string/category1"
+                        style="@style/CategoryTitle" />
 
                     <TextView
+                        android:id="@+id/object_found"
+                        style="@style/Underlined"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:background="@drawable/underline"
-                        android:fontFamily="@font/handwritten"
-                        android:textSize="20dp"
-                        android:letterSpacing="0.05"
-                        android:textColor="@color/sand"
-                        android:paddingBottom="7dp"
-                        android:id="@+id/object_found"/>
+                        android:layout_weight="4" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/originBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:id="@+id/originBox">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="ORIGIN:"
-                        android:textColor="@color/sandT"
-                        android:layout_marginRight="15dp"/>
+                        android:text="@string/category2"
+                        style="@style/CategoryTitle" />
 
                     <TextView
+                        android:id="@+id/object_origin"
+                        style="@style/Underlined"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:background="@drawable/underline"
-                        android:fontFamily="@font/handwritten"
-                        android:textSize="20dp"
-                        android:letterSpacing="0.05"
-                        android:textColor="@color/sand"
-                        android:paddingBottom="7dp"
-                        android:id="@+id/object_origin"/>
+                        android:layout_weight="4" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/dateBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:id="@+id/dateBox">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Date:"
-                        android:textAllCaps="true"
-                        android:textColor="@color/sandT"
-                        android:layout_marginRight="15dp"/>
+                        android:text="@string/category3"
+                        style="@style/CategoryTitle"/>
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:background="@drawable/underline"
-                        android:fontFamily="@font/handwritten"
-                        android:textSize="20dp"
-                        android:letterSpacing="0.05"
-                        android:textColor="@color/sand"
-                        android:paddingBottom="7dp"
                         android:id="@+id/object_date"
-                        />
+                        style="@style/Underlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/functionBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:id="@+id/functionBox">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Function:"
-                        android:textAllCaps="true"
-                        android:textColor="@color/sandT"
-                        android:layout_marginRight="15dp"/>
+                        android:text="@string/category4"
+                        style="@style/CategoryTitle" />
 
                     <TextView
+                        android:id="@+id/object_function"
+                        style="@style/LongDescriptions"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:background="@drawable/textbox"
-                        android:padding="5dp"
-                        android:paddingStart="10dp"
-                        android:fontFamily="@font/handwritten"
-                        android:textSize="20dp"
-                        android:letterSpacing="0.02"
-                        android:textColor="@color/sand"
-                        android:paddingBottom="7dp"
-                        android:id="@+id/object_function"/>
+                        android:layout_weight="4" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/storyBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
                     android:layout_marginBottom="20dp"
-                    android:id="@+id/storyBox">
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Story:"
-                        android:textAllCaps="true"
-                        android:textColor="@color/sandT"
-                        android:layout_marginRight="15dp"/>
+                        android:text="@string/category5"
+                        style="@style/CategoryTitle" />
 
                     <TextView
+                        android:id="@+id/object_story"
+                        style="@style/LongDescriptions"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="4"
-                        android:background="@drawable/textbox"
-                        android:padding="5dp"
-                        android:paddingStart="10dp"
-                        android:fontFamily="@font/handwritten"
-                        android:textSize="20dp"
-                        android:letterSpacing="0.02"
-                        android:textColor="@color/sand"
-                        android:paddingBottom="7dp"
-                        android:id="@+id/object_story"/>
+                        android:layout_weight="4" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
 
-
-
         </FrameLayout>
 
-
-
-
-
-
-        <!--    </LinearLayout>-->
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="30dp"
-        android:id="@+id/top">
+        android:padding="30dp">
 
         <TextView
+            android:id="@+id/mainTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Objects"
-            android:id="@+id/mainTitle"
+            android:text="@string/objectsBtn"
             android:textAlignment="center"
-            android:textColor="@color/sand"/>
+            android:textColor="@color/sand" />
 
         <ImageView
+            android:id="@+id/arrowLeft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_left"
-            android:id="@+id/arrowLeft"/>
+            android:src="@drawable/arrow_left" />
 
     </RelativeLayout>
 

@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Research Findings"
+            android:text="@string/findingsPageTitle"
             android:id="@+id/title_page"
             android:textAlignment="center"
             android:textColor="@color/sand"/>
@@ -42,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Objects"
+            android:text="@string/objectsBtn"
             android:background="@drawable/btn_blue"
             android:layout_marginRight="5dp"
             android:textColor="@color/main_blue"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_blue"
-            android:text="Field Notes"
+            android:text="@string/notesBtn"
             android:layout_marginLeft="5dp"
             android:textColor="@color/main_blue"
             android:id="@+id/notes_btn"/>

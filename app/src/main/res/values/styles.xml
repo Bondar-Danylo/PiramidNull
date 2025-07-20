@@ -21,7 +21,22 @@
         <item name="android:letterSpacing">0.05</item>
         <item name="android:textColor">@color/sand</item>
         <item name="android:paddingBottom">7dp</item>
-
+    </style>
+    
+    <style name="LongDescriptions">
+        <item name="android:background">@drawable/textbox</item>
+        <item name="android:padding">5dp</item>
+        <item name="paddingStart">10dp</item>
+        <item name="fontFamily">@font/handwritten</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textColor">@color/sand</item>
+    </style>
+    
+    <style name="CategoryTitle">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/sandT</item>
+        <item name="android:layout_marginRight">15dp</item>
     </style>
 
 </resources>

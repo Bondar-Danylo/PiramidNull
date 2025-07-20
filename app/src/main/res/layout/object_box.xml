@@ -35,10 +35,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="Artefact:"
-                    android:textColor="@color/sandT"
-                    android:layout_marginRight="15dp"/>
+                    android:text="@string/boxCategory1"
+                    style="@style/CategoryTitle"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -58,10 +56,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="OBJECT#:"
-                    android:textColor="@color/sandT"
-                    android:layout_marginRight="15dp"/>
+                    android:text="@string/boxCategory2"
+                    style="@style/CategoryTitle"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -81,10 +78,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Type:"
-                    android:textAllCaps="true"
-                    android:textColor="@color/sandT"
-                    android:layout_marginRight="15dp"/>
+                    android:text="@string/boxCategory3"
+                    style="@style/CategoryTitle"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -103,17 +98,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SIZE:"
-                    android:textAllCaps="true"
-                    android:textColor="@color/sandT"
-                    android:paddingBottom="7dp"
-                    android:layout_marginRight="15dp">
+                    android:text="@string/boxCategory4"
+                    style="@style/CategoryTitle">
                 </TextView>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/Underlined"
+                    android:paddingBottom="7dp"
                     android:id="@+id/objectSize">
                 </TextView>
 
