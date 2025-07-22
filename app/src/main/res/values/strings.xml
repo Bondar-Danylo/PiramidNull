@@ -36,10 +36,10 @@
     <string name="todo2">TODO2</string>
     <string name="todo3">TODO3</string>
     <string name="text_size">Text size</string>
-    <string name="archaeologist">Archaeologist</string>
-    <string name="professor_of_archeology_of_oxford_university_10years">Professor of Archeology of Oxford University (10years)</string>
+    <string name="archaeologist">• Archaeologist</string>
+    <string name="professor_of_archeology_of_oxford_university_10years">• Professor of Archeology of Oxford University (10years)</string>
     <string name="specialisation">Specialisation</string>
-    <string name="anciebt_languages">Anciebt Languages</string>
+    <string name="anciebt_languages">• Anciebt Languages</string>
     <string name="current_possition">Current Possition</string>
-    <string name="researcher_for_the_egyption_antiquities_authority_in_egypt">Researcher for the Egyption Antiquities Authority in Egypt</string>
+    <string name="researcher_for_the_egyption_antiquities_authority_in_egypt">• Researcher for the Egyption Antiquities Authority in Egypt</string>
 </resources>
